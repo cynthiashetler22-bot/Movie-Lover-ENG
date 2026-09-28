@@ -1,0 +1,99 @@
+{
+  "lastSyncedAt": "2026-09-28T10:25:00.000Z",
+  "version": "1.0.0",
+  "settings": {
+    "siteTitle": "STREAMORA",
+    "tagline": "A world of stories, selected for you.",
+    "brandDescriptor": "Cinema Journal & Film Discovery",
+    "githubPatToken": "",
+    "githubRepo": "cynthiashetler22/movie-lover-eng",
+    "seoDescription": "Premier independent movie discovery journal and international cinema festival catalogue for Tier-1 film lovers.",
+    "editorialContactEmail": "editorial@streamora-cinema.example",
+    "customHeaderScript": "",
+    "customFooterScript": ""
+  },
+  "ads": [
+    {
+      "id": "ad-slot-1",
+      "name": "Programme Sponsored Break (Top/Mid)",
+      "slot": "middle_placement",
+      "enabled": true,
+      "type": "direct_link",
+      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "buttonText": "VISIT SPONSORED OFFER",
+      "htmlScriptCode": "",
+      "sponsorName": "Global Entertainment Partner",
+      "disclosureText": "Sponsored third-party offer. The destination is external and may have its own terms and conditions."
+    },
+    {
+      "id": "ad-slot-2",
+      "name": "Collection Secondary Banner",
+      "slot": "bottom_placement",
+      "enabled": true,
+      "type": "direct_link",
+      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "buttonText": "OPEN SPONSORED OFFER",
+      "htmlScriptCode": "",
+      "sponsorName": "Premier Streaming Discovery Network",
+      "disclosureText": "This is an external promotional link. Availability and terms are set by the destination."
+    },
+    {
+      "id": "ad-slot-3",
+      "name": "Film Dossier Modal Sponsor",
+      "slot": "detail_modal_ad",
+      "enabled": true,
+      "type": "direct_link",
+      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "buttonText": "EXPLORE SPONSORED PARTNER",
+      "htmlScriptCode": "",
+      "sponsorName": "Verified Partner Portal",
+      "disclosureText": "External partner offer. Does not imply movie download or streaming."
+    }
+  ],
+  "movies": [
+    {
+      "id": "hidden-truth",
+      "title": "The Hidden Truth",
+      "genre": "Mystery",
+      "secondaryGenre": "Noir Drama",
+      "year": 2024,
+      "duration": "112 min",
+      "director": "Éléonore Vance",
+      "shortDesc": "A long-sealed courtroom transcript unearths a web of silence in a coastal harbor town.",
+      "synopsis": "When an archivist in an Atlantic fishing port discovers an uncatalogued transcript from the winter of 1968, she begins tracing the fate of an investigative journalist who disappeared without a trace.",
+      "editorialNote": "Shot on 35mm Kodak Vision3 film with an evocative chamber orchestra score.",
+      "mood": "Atmospheric & Enigmatic",
+      "accentHue": "#63A9A0",
+      "ratingScore": "8.9",
+      "editorialPick": true,
+      "quality": "4K Ultra HD",
+      "fileSize": "2.1 GB",
+      "audioTracks": "Dual Audio [Hindi + English]",
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
+    },
+    {
+      "id": "last-promise",
+      "title": "The Last Promise",
+      "genre": "Drama",
+      "secondaryGenre": "Romance",
+      "year": 2023,
+      "duration": "124 min",
+      "director": "Julian K. Richter",
+      "shortDesc": "Separated by borders, two musicians exchange unsent letters across three decades.",
+      "synopsis": "Spanning from the mid-1980s in Central Europe to modern-day Vienna, Richter weaves a bittersweet meditation on artistic sacrifice, fidelity, and the echoes of youth.",
+      "editorialNote": "A profound study in emotional restraint, celebrated by international critics.",
+      "mood": "Poignant & Lyrical",
+      "accentHue": "#D9A45B",
+      "ratingScore": "8.7",
+      "editorialPick": true,
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + English]",
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
+    }
+  ]
+}

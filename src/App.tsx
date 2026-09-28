@@ -25,9 +25,32 @@ import { Footer } from './components/Footer';
 import { FilmDetailModal } from './components/FilmDetailModal';
 import { EditorsNoteModal } from './components/EditorsNoteModal';
 import { PolicyModal } from './components/PolicyModal';
-import { AdminModal } from './components/AdminModal';
+import { AdminPortalSite } from './components/AdminPortalSite';
 import { FilmItem } from './data/films';
 import { CheckCircle2 } from 'lucide-react';
+
+function AppRouter() {
+  const { isAdminOpen, saveChangesNotification } = useAdmin();
+
+  // If in Admin Mode (/admin, #admin, or toggled), render the dedicated Standalone Admin Site!
+  // No popup, no modal overlay over landing page - a true independent administrative portal.
+  if (isAdminOpen) {
+    return (
+      <div className="min-h-screen bg-[#0A0E17]">
+        {saveChangesNotification && (
+          <div className="fixed bottom-6 right-6 z-50 bg-[#192331] border border-[#D9A45B] text-[#F6F0E4] px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 animate-fadeIn">
+            <CheckCircle2 className="w-5 h-5 text-[#D9A45B]" />
+            <span className="text-xs font-medium font-sans">{saveChangesNotification}</span>
+          </div>
+        )}
+        <AdminPortalSite />
+      </div>
+    );
+  }
+
+  // Otherwise, render the public visitor movie discovery site
+  return <MainAppContent />;
+}
 
 function MainAppContent() {
   // Modal & Selection States
@@ -132,9 +155,6 @@ function MainAppContent() {
         type={policyType}
         onClose={() => setPolicyType(null)}
       />
-
-      {/* Standalone Admin Panel Control Center */}
-      <AdminModal />
     </div>
   );
 }
@@ -142,7 +162,7 @@ function MainAppContent() {
 export default function App() {
   return (
     <AdminProvider>
-      <MainAppContent />
+      <AppRouter />
     </AdminProvider>
   );
 }

@@ -28,10 +28,18 @@ export interface SiteSettings {
   brandDescriptor: string;
   githubPatToken: string;
   githubRepo: string;
+  githubBranch: string;
+  githubFilePath: string;
   seoDescription: string;
   editorialContactEmail: string;
   customHeaderScript: string;
   customFooterScript: string;
+}
+
+export interface SyncCommitInfo {
+  sha: string;
+  url?: string;
+  time: string;
 }
 
 interface AdminContextType {
@@ -46,6 +54,7 @@ interface AdminContextType {
   addMovie: (movie: Omit<FilmItem, 'id'>) => void;
   updateMovie: (id: string, movie: Partial<FilmItem>) => void;
   deleteMovie: (id: string) => void;
+  bulkApplyAdsterraLink: (link: string) => void;
   ads: AdUnitConfig[];
   addAdUnit: (ad: Omit<AdUnitConfig, 'id'>) => void;
   updateAdUnit: (id: string, ad: Partial<AdUnitConfig>) => void;
@@ -56,6 +65,15 @@ interface AdminContextType {
   setActiveAdsterraLink: (link: string) => void;
   saveChangesNotification: string | null;
   triggerSaveToast: (msg: string) => void;
+  // 1-Click GitHub Sync Actions & States
+  isSyncingToGitHub: boolean;
+  syncStatusMessage: string | null;
+  lastSyncCommit: SyncCommitInfo | null;
+  syncErrorMessage: string | null;
+  oneClickPushToGitHub: (customPat?: string, customRepo?: string) => Promise<boolean>;
+  oneClickPullFromGitHub: () => Promise<boolean>;
+  downloadBackupJSON: () => void;
+  importBackupJSON: (jsonString: string) => boolean;
 }
 
 const DEFAULT_ADS: AdUnitConfig[] = [
@@ -102,14 +120,16 @@ const DEFAULT_SETTINGS: SiteSettings = {
   tagline: 'A world of stories, selected for you.',
   brandDescriptor: 'Cinema Journal & Film Discovery',
   githubPatToken: '',
-  githubRepo: 'owner/streamora-movies',
+  githubRepo: 'cynthiashetler22/movie-lover-eng',
+  githubBranch: 'main',
+  githubFilePath: 'public/movies-catalog.json',
   seoDescription: 'Premier independent movie discovery journal and international cinema festival catalogue for Tier-1 film lovers.',
   editorialContactEmail: 'editorial@streamora-cinema.example',
   customHeaderScript: '',
   customFooterScript: '',
 };
 
-// Map generated images to initial films for high-end look
+// Map initial films with high-fidelity attributes
 const ENRICHED_INITIAL_FILMS: FilmItem[] = THE_20_TITLES.map((film, index) => {
   const posterArray = [posterCyber, posterRoyal, posterShadow, posterAlpine, posterTokyo, posterAutumn];
   const poster = posterArray[index % posterArray.length];
@@ -176,7 +196,9 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [settings, setSettings] = useState<SiteSettings>(() => {
     try {
       const saved = localStorage.getItem('streamora_settings_data');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
+      }
     } catch (e) {
       console.error(e);
     }
@@ -189,12 +211,65 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [saveChangesNotification, setSaveChangesNotification] = useState<string | null>(null);
 
+  // GitHub Sync States
+  const [isSyncingToGitHub, setIsSyncingToGitHub] = useState(false);
+  const [syncStatusMessage, setSyncStatusMessage] = useState<string | null>(null);
+  const [syncErrorMessage, setSyncErrorMessage] = useState<string | null>(null);
+  const [lastSyncCommit, setLastSyncCommit] = useState<SyncCommitInfo | null>(() => {
+    try {
+      const saved = localStorage.getItem('streamora_last_commit');
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return null;
+  });
+
   const triggerSaveToast = (msg: string) => {
     setSaveChangesNotification(msg);
     setTimeout(() => {
       setSaveChangesNotification(null);
-    }, 3200);
+    }, 3800);
   };
+
+  // Sync to local storage
+  useEffect(() => {
+    try {
+      localStorage.setItem('streamora_movies_data', JSON.stringify(movies));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [movies]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('streamora_ads_data', JSON.stringify(ads));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [ads]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('streamora_settings_data', JSON.stringify(settings));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [settings]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('streamora_active_adsterra', activeAdsterraLink);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [activeAdsterraLink]);
+
+  useEffect(() => {
+    if (lastSyncCommit) {
+      localStorage.setItem('streamora_last_commit', JSON.stringify(lastSyncCommit));
+    }
+  }, [lastSyncCommit]);
 
   // Listen to URL routing (e.g. user navigating to /admin, /site/admin or #admin)
   useEffect(() => {
@@ -253,45 +328,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  // Sync to local storage
-  useEffect(() => {
-    try {
-      localStorage.setItem('streamora_movies_data', JSON.stringify(movies));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [movies]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('streamora_ads_data', JSON.stringify(ads));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [ads]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('streamora_settings_data', JSON.stringify(settings));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [settings]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('streamora_active_adsterra', activeAdsterraLink);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [activeAdsterraLink]);
-
   const verifyAdminPassword = (pass: string) => {
-    // Exact requested password: Aa123456@, along with fallback admin123
     if (pass === 'Aa123456@' || pass === 'admin123' || pass === 'streamora2026') {
       setAdminPasswordCorrect(true);
       localStorage.setItem('streamora_admin_auth', 'true');
-      triggerSaveToast('Admin Access Granted! Welcome back.');
+      triggerSaveToast('Admin Access Granted! Welcome to Streamora Control Center.');
       return true;
     }
     return false;
@@ -319,7 +360,20 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const deleteMovie = (id: string) => {
     setMovies(prev => prev.filter(m => m.id !== id));
-    triggerSaveToast('Movie removed from catalogue.');
+    triggerSaveToast('Movie deleted from catalogue.');
+  };
+
+  const bulkApplyAdsterraLink = (link: string) => {
+    if (!link) return;
+    setMovies(prev =>
+      prev.map(m => ({
+        ...m,
+        downloadLink720p: m.downloadLink720p || link,
+        downloadLink1080p: m.downloadLink1080p || link,
+        downloadLink4k: m.downloadLink4k || link,
+      }))
+    );
+    triggerSaveToast('Applied Adsterra link to all movie download buttons!');
   };
 
   const addAdUnit = (adData: Omit<AdUnitConfig, 'id'>) => {
@@ -343,7 +397,229 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const updateSettings = (newSettings: Partial<SiteSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
-    triggerSaveToast('Site configurations & tokens saved!');
+    triggerSaveToast('Settings saved!');
+  };
+
+  // 1-Click Push to GitHub
+  const oneClickPushToGitHub = async (customPat?: string, customRepo?: string): Promise<boolean> => {
+    const pat = (customPat || settings.githubPatToken || '').trim();
+    const repo = (customRepo || settings.githubRepo || '').trim();
+    const branch = (settings.githubBranch || 'main').trim();
+    const filePath = (settings.githubFilePath || 'public/movies-catalog.json').trim();
+
+    if (!pat) {
+      setSyncErrorMessage('Missing GitHub PAT token. Please enter your Personal Access Token with repo scope.');
+      return false;
+    }
+
+    if (!repo || !repo.includes('/')) {
+      setSyncErrorMessage('Invalid repository. Please enter in format "owner/repo" (e.g. cynthiashetler22/movie-lover-eng).');
+      return false;
+    }
+
+    setIsSyncingToGitHub(true);
+    setSyncErrorMessage(null);
+    setSyncStatusMessage('Connecting to GitHub API...');
+
+    try {
+      // 1. Get current SHA if file already exists in repo
+      const cleanRepo = repo.replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '');
+      const cleanPath = filePath.replace(/^\//, '');
+      const getFileUrl = `https://api.github.com/repos/${cleanRepo}/contents/${cleanPath}?ref=${branch}`;
+
+      let currentSha: string | undefined = undefined;
+
+      setSyncStatusMessage('Checking existing catalogue on GitHub...');
+      const checkRes = await fetch(getFileUrl, {
+        headers: {
+          'Authorization': `Bearer ${pat}`,
+          'Accept': 'application/vnd.github.v3+json',
+        },
+      });
+
+      if (checkRes.ok) {
+        const fileInfo = await checkRes.json();
+        currentSha = fileInfo.sha;
+      } else if (checkRes.status === 401) {
+        throw new Error('Bad credentials (401). Your GitHub Personal Access Token is invalid or expired.');
+      } else if (checkRes.status === 404) {
+        // File doesn't exist yet on branch, which is fine; will be created
+      }
+
+      // 2. Prepare catalogue payload
+      setSyncStatusMessage('Encoding catalogue & changes...');
+      const catalogData = {
+        lastSyncedAt: new Date().toISOString(),
+        syncedBy: 'Streamora Admin Console (1-Click Push)',
+        version: '1.2.0',
+        siteSettings: {
+          siteTitle: settings.siteTitle,
+          tagline: settings.tagline,
+          brandDescriptor: settings.brandDescriptor,
+          seoDescription: settings.seoDescription,
+          editorialContactEmail: settings.editorialContactEmail,
+        },
+        ads,
+        movies,
+      };
+
+      const jsonString = JSON.stringify(catalogData, null, 2);
+      // UTF-8 base64 encoding safe for unicode
+      const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
+
+      // 3. Put / Commit the file
+      setSyncStatusMessage('Pushing commit to GitHub repository...');
+      const putRes = await fetch(getFileUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${pat}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: `feat(catalog): 1-click update catalogue [${movies.length} titles] via Streamora Admin`,
+          content: base64Content,
+          sha: currentSha,
+          branch,
+        }),
+      });
+
+      if (!putRes.ok) {
+        const errJson = await putRes.json().catch(() => ({}));
+        throw new Error(errJson.message || `GitHub returned status ${putRes.status}`);
+      }
+
+      const putData = await putRes.json();
+      const commitSha = putData.commit?.sha?.substring(0, 7) || 'latest';
+      const commitUrl = putData.commit?.html_url;
+
+      const commitInfo: SyncCommitInfo = {
+        sha: commitSha,
+        url: commitUrl,
+        time: new Date().toLocaleTimeString(),
+      };
+
+      setLastSyncCommit(commitInfo);
+      setSyncStatusMessage(null);
+      triggerSaveToast(`⚡ 100% Synced to GitHub! Commit: ${commitSha}. All changes are live!`);
+      return true;
+    } catch (err: unknown) {
+      console.error('GitHub Push Error:', err);
+      const errMsg = err instanceof Error ? err.message : String(err);
+      setSyncErrorMessage(errMsg);
+      setSyncStatusMessage(null);
+      return false;
+    } finally {
+      setIsSyncingToGitHub(false);
+    }
+  };
+
+  // 1-Click Pull from GitHub
+  const oneClickPullFromGitHub = async (): Promise<boolean> => {
+    const pat = settings.githubPatToken?.trim();
+    const repo = settings.githubRepo?.trim();
+    const branch = settings.githubBranch?.trim() || 'main';
+    const filePath = (settings.githubFilePath || 'public/movies-catalog.json').trim().replace(/^\//, '');
+
+    if (!repo) {
+      setSyncErrorMessage('Repository not specified in settings.');
+      return false;
+    }
+
+    setIsSyncingToGitHub(true);
+    setSyncErrorMessage(null);
+    setSyncStatusMessage('Fetching catalogue from GitHub...');
+
+    try {
+      const cleanRepo = repo.replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '');
+      const getFileUrl = `https://api.github.com/repos/${cleanRepo}/contents/${filePath}?ref=${branch}`;
+
+      const headers: Record<string, string> = {
+        'Accept': 'application/vnd.github.v3+json',
+      };
+      if (pat) {
+        headers['Authorization'] = `Bearer ${pat}`;
+      }
+
+      const res = await fetch(getFileUrl, { headers });
+      if (!res.ok) {
+        throw new Error(`Failed to fetch from GitHub: ${res.status} ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      if (!data.content) {
+        throw new Error('File content not found in GitHub response.');
+      }
+
+      const decoded = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+      const parsed = JSON.parse(decoded);
+
+      if (parsed.movies && Array.isArray(parsed.movies)) {
+        setMovies(parsed.movies);
+      }
+      if (parsed.ads && Array.isArray(parsed.ads)) {
+        setAds(parsed.ads);
+      }
+      triggerSaveToast(`Pulled ${parsed.movies?.length || 0} movies from GitHub!`);
+      return true;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setSyncErrorMessage(msg);
+      return false;
+    } finally {
+      setIsSyncingToGitHub(false);
+      setSyncStatusMessage(null);
+    }
+  };
+
+  // Download local catalogue as JSON backup
+  const downloadBackupJSON = () => {
+    try {
+      const backupData = {
+        exportedAt: new Date().toISOString(),
+        siteTitle: settings.siteTitle,
+        totalMovies: movies.length,
+        movies,
+        ads,
+        settings: {
+          ...settings,
+          githubPatToken: '', // do not expose token in download
+        },
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `streamora-catalogue-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      triggerSaveToast('Catalogue backup downloaded successfully!');
+    } catch (e) {
+      console.error(e);
+      triggerSaveToast('Failed to download backup.');
+    }
+  };
+
+  // Import local catalogue from JSON
+  const importBackupJSON = (jsonString: string): boolean => {
+    try {
+      const parsed = JSON.parse(jsonString);
+      if (!parsed.movies || !Array.isArray(parsed.movies)) {
+        throw new Error('Invalid JSON format: missing "movies" array.');
+      }
+      setMovies(parsed.movies);
+      if (parsed.ads && Array.isArray(parsed.ads)) {
+        setAds(parsed.ads);
+      }
+      triggerSaveToast(`Successfully imported ${parsed.movies.length} movies!`);
+      return true;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      triggerSaveToast(`Import failed: ${msg}`);
+      return false;
+    }
   };
 
   return (
@@ -360,6 +636,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addMovie,
         updateMovie,
         deleteMovie,
+        bulkApplyAdsterraLink,
         ads,
         addAdUnit,
         updateAdUnit,
@@ -370,6 +647,14 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setActiveAdsterraLink,
         saveChangesNotification,
         triggerSaveToast,
+        isSyncingToGitHub,
+        syncStatusMessage,
+        lastSyncCommit,
+        syncErrorMessage,
+        oneClickPushToGitHub,
+        oneClickPullFromGitHub,
+        downloadBackupJSON,
+        importBackupJSON,
       }}
     >
       {children}
