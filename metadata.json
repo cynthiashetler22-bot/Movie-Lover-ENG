@@ -1,0 +1,6 @@
+{
+  "name": "Streamora Cinema Journal",
+  "description": "An independent film-festival and cinema-discovery journal featuring curated programmes, genre guides, and thoughtful editorial recommendations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

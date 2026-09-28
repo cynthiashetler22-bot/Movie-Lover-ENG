@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-bg-base: #101722;
+  --color-surface-base: #192331;
+  --color-surface-raised: #202C3A;
+  --color-text-main: #F6F0E4;
+  --color-text-muted: #B6B2A9;
+  --color-border-line: #34404C;
+  --color-accent-amber: #D9A45B;
+  --color-accent-teal: #63A9A0;
+}
+
+:root {
+  --bg: #101722;
+  --surface: #192331;
+  --surface-raised: #202C3A;
+  --text: #F6F0E4;
+  --muted: #B6B2A9;
+  --border: #34404C;
+  --accent: #D9A45B;
+  --accent-secondary: #63A9A0;
+  --content-width: 1180px;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle Film Grain Texture Overlay */
+.film-grain {
+  background-image: radial-gradient(rgba(217, 164, 91, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* High legibility focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Custom Scrollbar for curated feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
