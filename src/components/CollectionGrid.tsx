@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { FilmItem } from '../data/films';
-import { Search, Eye, Sparkles, Star, Award } from 'lucide-react';
+import { Search, Eye, Sparkles, Star, Award, Download } from 'lucide-react';
 import { useAdmin } from '../context/AdminContext';
 
 interface CollectionGridProps {
@@ -194,20 +194,29 @@ export const CollectionGrid: React.FC<CollectionGridProps> = ({
                   </div>
                 </div>
 
-                {/* Card Action */}
+                {/* Card Action: Download & View Details */}
                 <div className="px-5 pb-5 pt-0 flex items-center justify-between border-t border-[#34404C]/40 pt-3">
-                  <span className="text-[10px] uppercase tracking-wider text-[#B6B2A9]/50 font-mono">
-                    #{String(idx + 1).padStart(2, '0')}
+                  <span className="text-[10px] uppercase tracking-wider text-[#D9A45B] font-mono font-bold">
+                    {film.quality || '1080p'}
                   </span>
 
-                  <button
-                    onClick={() => onSelectFilm(film)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#F6F0E4] group-hover:text-[#101722] group-hover:bg-[#D9A45B] border border-[#34404C] group-hover:border-[#D9A45B] rounded-lg transition-all cursor-pointer shadow-sm"
-                    aria-label={`View details for ${film.title}`}
-                  >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>View Details</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => onSelectFilm(film)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#101722] bg-[#D9A45B] hover:bg-[#e4b574] rounded-lg transition-all cursor-pointer shadow-sm"
+                      aria-label={`Download ${film.title}`}
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download</span>
+                    </button>
+                    <button
+                      onClick={() => onSelectFilm(film)}
+                      className="p-1.5 text-[#B6B2A9] hover:text-[#F6F0E4] hover:bg-[#202C3A] rounded-lg transition-colors cursor-pointer"
+                      title="View Details"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </article>
             ))}

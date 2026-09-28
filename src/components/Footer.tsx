@@ -26,19 +26,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPolicy }) => {
             </p>
           </div>
 
-          {/* Quick internal jump navigation & Admin Trigger */}
+          {/* Quick internal jump navigation */}
           <nav className="flex flex-wrap items-center gap-6 text-xs text-[#B6B2A9] font-sans" aria-label="Footer Navigation">
             <a href="#programme" className="hover:text-[#F6F0E4] transition-colors">The Programme</a>
             <a href="#collections" className="hover:text-[#F6F0E4] transition-colors">Collections</a>
             <a href="#genres" className="hover:text-[#F6F0E4] transition-colors">Genres</a>
             <a href="#about" className="hover:text-[#F6F0E4] transition-colors">About</a>
-            <button
-              onClick={() => setIsAdminOpen(true)}
-              className="hover:text-[#D9A45B] transition-colors inline-flex items-center gap-1 cursor-pointer font-mono"
-            >
-              <Shield className="w-3 h-3 text-[#D9A45B]" />
-              <span>Admin Portal {adminPasswordCorrect ? '(Unlocked)' : ''}</span>
-            </button>
           </nav>
         </div>
 

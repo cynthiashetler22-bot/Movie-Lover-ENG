@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchClick, searchQuery, setS
           </a>
         </nav>
 
-        {/* Right: Search, Admin button, and Browse internal actions */}
+        {/* Right: Search & Browse internal actions */}
         <div className="flex items-center gap-2 sm:gap-3">
           {searchOpen ? (
             <div className="relative flex items-center animate-fadeIn">
@@ -83,25 +83,11 @@ export const Header: React.FC<HeaderProps> = ({ onSearchClick, searchQuery, setS
             </button>
           )}
 
-          {/* ADMIN PANEL ACCESS BUTTON */}
-          <button
-            onClick={() => setIsAdminOpen(true)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium uppercase tracking-wider rounded border transition-all cursor-pointer ${
-              adminPasswordCorrect
-                ? 'bg-[#D9A45B]/15 text-[#D9A45B] border-[#D9A45B]/50 hover:bg-[#D9A45B] hover:text-[#101722]'
-                : 'bg-[#192331] text-[#B6B2A9] border-[#34404C] hover:text-[#F6F0E4] hover:border-[#D9A45B]/60'
-            }`}
-            title="Open Admin Control Center (Movies, Ads, GitHub PAT)"
-            aria-label="Open Admin Control Center"
-          >
-            <Shield className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Admin Panel</span>
-            <span className="sm:hidden">Admin</span>
-          </button>
+          {/* Discreet admin access is strictly via URL (/admin or #admin) or Ctrl+Shift+A */}
 
           <a
             href="#collection"
-            className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold tracking-wide uppercase text-[#101722] bg-[#D9A45B] hover:bg-[#e4b574] rounded transition-all whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold tracking-wide uppercase text-[#101722] bg-[#D9A45B] hover:bg-[#e4b574] rounded transition-all whitespace-nowrap"
           >
             <Compass className="w-3.5 h-3.5" />
             <span>Browse Titles</span>
@@ -160,16 +146,6 @@ export const Header: React.FC<HeaderProps> = ({ onSearchClick, searchQuery, setS
             </a>
           </nav>
           <div className="pt-3 border-t border-[#34404C] flex flex-col gap-3">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setIsAdminOpen(true);
-              }}
-              className="w-full text-center px-4 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#202C3A] text-[#D9A45B] border border-[#D9A45B]/40 rounded hover:bg-[#2c3d50] transition-colors flex items-center justify-center gap-2"
-            >
-              <Shield className="w-4 h-4" />
-              <span>Admin Panel (Manage Site & Ads)</span>
-            </button>
             <a
               href="#collection"
               onClick={() => setMobileMenuOpen(false)}

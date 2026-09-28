@@ -37,6 +37,8 @@ export interface SiteSettings {
 interface AdminContextType {
   isAdminOpen: boolean;
   setIsAdminOpen: (open: boolean) => void;
+  openAdmin: () => void;
+  closeAdmin: () => void;
   adminPasswordCorrect: boolean;
   verifyAdminPassword: (pass: string) => boolean;
   adminLogout: () => void;
@@ -111,18 +113,39 @@ const DEFAULT_SETTINGS: SiteSettings = {
 const ENRICHED_INITIAL_FILMS: FilmItem[] = THE_20_TITLES.map((film, index) => {
   const posterArray = [posterCyber, posterRoyal, posterShadow, posterAlpine, posterTokyo, posterAutumn];
   const poster = posterArray[index % posterArray.length];
+  const audioList = [
+    'Dual Audio [Hindi + English]',
+    'Multi Audio [Eng + Hindi + Bengali]',
+    'English [Original Dolby 5.1]',
+    'Dual Audio [Eng + Spanish]'
+  ];
   return {
     ...film,
     posterUrl: poster,
     ratingScore: (8.4 + (index % 15) * 0.1).toFixed(1),
     editorialPick: index < 6,
+    quality: index % 3 === 0 ? '4K Ultra HD' : '1080p FHD',
+    fileSize: `${(1.2 + (index % 5) * 0.4).toFixed(1)} GB`,
+    audioTracks: audioList[index % audioList.length],
+    downloadLink720p: 'YOUR_ADSTERRA_LINK',
+    downloadLink1080p: 'YOUR_ADSTERRA_LINK',
+    downloadLink4k: 'YOUR_ADSTERRA_LINK',
   };
 });
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  // Check if initial URL matches /admin, /site/admin, or #admin
+  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      return path.includes('/admin') || path.endsWith('admin') || hash.includes('admin');
+    }
+    return false;
+  });
+
   const [adminPasswordCorrect, setAdminPasswordCorrect] = useState(() => {
     return localStorage.getItem('streamora_admin_auth') === 'true';
   });
@@ -173,6 +196,63 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }, 3200);
   };
 
+  // Listen to URL routing (e.g. user navigating to /admin, /site/admin or #admin)
+  useEffect(() => {
+    const handleUrlCheck = () => {
+      if (typeof window === 'undefined') return;
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path.includes('admin') || hash.includes('admin')) {
+        setIsAdminOpen(true);
+      }
+    };
+
+    handleUrlCheck();
+    window.addEventListener('popstate', handleUrlCheck);
+    window.addEventListener('hashchange', handleUrlCheck);
+
+    // Secret shortcut for the site owner: Ctrl+Shift+A or Cmd+Shift+A
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsAdminOpen(prev => {
+          const next = !prev;
+          if (next) {
+            window.location.hash = '#admin';
+          } else {
+            if (window.location.hash.toLowerCase().includes('admin')) {
+              window.history.replaceState(null, '', window.location.pathname);
+            }
+          }
+          return next;
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('popstate', handleUrlCheck);
+      window.removeEventListener('hashchange', handleUrlCheck);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const openAdmin = () => {
+    setIsAdminOpen(true);
+    if (!window.location.hash.toLowerCase().includes('admin') && !window.location.pathname.toLowerCase().includes('admin')) {
+      window.location.hash = '#admin';
+    }
+  };
+
+  const closeAdmin = () => {
+    setIsAdminOpen(false);
+    if (window.location.hash.toLowerCase().includes('admin')) {
+      window.history.replaceState(null, '', window.location.pathname);
+    } else if (window.location.pathname.toLowerCase().includes('admin')) {
+      window.history.replaceState(null, '', '/');
+    }
+  };
+
   // Sync to local storage
   useEffect(() => {
     try {
@@ -207,11 +287,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [activeAdsterraLink]);
 
   const verifyAdminPassword = (pass: string) => {
-    // Default master pass or demo pass
-    if (pass === 'admin123' || pass === 'streamora2026' || pass === 'admin') {
+    // Exact requested password: Aa123456@, along with fallback admin123
+    if (pass === 'Aa123456@' || pass === 'admin123' || pass === 'streamora2026') {
       setAdminPasswordCorrect(true);
       localStorage.setItem('streamora_admin_auth', 'true');
-      triggerSaveToast('Welcome back, Admin! Panel unlocked.');
+      triggerSaveToast('Admin Access Granted! Welcome back.');
       return true;
     }
     return false;
@@ -271,6 +351,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       value={{
         isAdminOpen,
         setIsAdminOpen,
+        openAdmin,
+        closeAdmin,
         adminPasswordCorrect,
         verifyAdminPassword,
         adminLogout,

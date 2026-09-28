@@ -23,6 +23,12 @@ export interface FilmItem {
   posterUrl?: string;
   ratingScore?: string;
   editorialPick?: boolean;
+  quality?: string; // 4K UHD, 1080p, 720p
+  fileSize?: string; // e.g. 1.8 GB
+  audioTracks?: string; // e.g. Dual Audio [Hindi + Eng]
+  downloadLink720p?: string;
+  downloadLink1080p?: string;
+  downloadLink4k?: string;
 }
 
 export const PROGRAMME_FEATURED_FILMS: FilmItem[] = [
