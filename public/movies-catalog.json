@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-30T19:32:16.768Z",
+  "lastSyncedAt": "2026-09-30T19:34:52.308Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -38,10 +38,10 @@
     {
       "id": "ad-slot-3",
       "name": "Film Dossier Modal Sponsor",
-      "slot": "detail_modal_ad",
+      "slot": "bottom_placement",
       "enabled": true,
       "type": "direct_link",
-      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "directLinkUrl": "https://direct-league.com/dEmNFoz.dtGcNDv/ZPGNUF/SeemC9kuWZvUolrk/PrTdce0ON/zHY-wUMKzHMat/N/zOQz3VNAjCAtzLN/wp",
       "buttonText": "EXPLORE SPONSORED PARTNER",
       "htmlScriptCode": "",
       "sponsorName": "Verified Partner Portal",
