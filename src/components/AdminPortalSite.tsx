@@ -1406,6 +1406,125 @@ export const AdminPortalSite: React.FC = () => {
                 </div>
               </div>
 
+              {/* INTERACTIVE AD SIZE & PLACEMENT CHEAT SHEET */}
+              <div className="bg-[#0D1420] border border-[#23354C] rounded-2xl p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#D9A45B]" />
+                    <h3 className="text-xs sm:text-sm font-bold text-[#F6F0E4] uppercase tracking-wide">
+                      💡 Ad Placement & Size Strategy Guide (কোন অ্যাড কোথায়, কোন সাইজে ও কোন নেটওয়ার্ক বসালে সর্বোচ্চ ইনকাম হবে)
+                    </h3>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    High CPM Movie Portal Setup
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-1 text-xs">
+                  {/* Slot 1: Top Header */}
+                  <div className="p-3.5 bg-[#121A26] border border-[#1E2B3E] rounded-xl space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#D9A45B]">1. Top Header Banner</span>
+                      <span className="font-mono text-[10px] text-slate-400">728x90 / 320x50</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      <strong>স্লট:</strong> <code className="text-teal-300">top_banner</code> (হেডারের নিচে ও স্লাইডারের উপরে)।
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      <strong>সেরা ফরম্যাট:</strong> Adsterra 728x90 Leaderboard অথবা Adcash 728x90। মোবাইলের জন্য 320x50।
+                    </p>
+                    <div className="text-[10px] text-amber-300/90 font-mono">
+                      রেটিং: ⭐⭐⭐⭐ (হাই ভিউ ও ব্র্যান্ডিং)
+                    </div>
+                  </div>
+
+                  {/* Slot 2: Middle Placement */}
+                  <div className="p-3.5 bg-[#121A26] border border-[#1E2B3E] rounded-xl space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#D9A45B]">2. Middle Content Banner</span>
+                      <span className="font-mono text-[10px] text-slate-400">728x90 / 300x250</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      <strong>স্লট:</strong> <code className="text-teal-300">middle_placement</code> (স্লাইডার ও মুভি গ্রিডের মাঝে)।
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      <strong>সেরা ফরম্যাট:</strong> 300x250 Medium Rectangle বা Native Banner Widget।
+                    </p>
+                    <div className="text-[10px] text-amber-300/90 font-mono">
+                      রেটিং: ⭐⭐⭐⭐⭐ (ইউজার স্ক্রল করার সময় সর্বোচ্চ ক্লিক)
+                    </div>
+                  </div>
+
+                  {/* Slot 3: Movie Download Modal */}
+                  <div className="p-3.5 bg-[#121A26] border border-amber-500/40 rounded-xl space-y-1.5 shadow-md">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-amber-300">3. Movie Download Modal</span>
+                      <span className="font-mono text-[10px] text-amber-400">300x250 / Smartlink</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      <strong>স্লট:</strong> <code className="text-teal-300">detail_modal_ad</code> (মুভি ডাউনলোড পপআপের ভেতরে)।
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      <strong>সেরা ফরম্যাট:</strong> Adsterra 300x250 বা Direct Smartlink বাটন।
+                    </p>
+                    <div className="text-[10px] text-emerald-400 font-mono font-bold">
+                      রেটিং: ⭐⭐⭐⭐⭐ (মুভি সাইটের সর্বোচ্চ কনভার্সন স্পট!)
+                    </div>
+                  </div>
+
+                  {/* Slot 4: Popunder / OnClick */}
+                  <div className="p-3.5 bg-[#121A26] border border-[#1E2B3E] rounded-xl space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#D9A45B]">4. Popunder / OnClick</span>
+                      <span className="font-mono text-[10px] text-slate-400">Full Tab Pop</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      <strong>স্লট:</strong> <code className="text-teal-300">floating_corner</code> (গ্লোবাল ব্যাকগ্রাউন্ড)।
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      <strong>সেরা ফরম্যাট:</strong> Adsterra Popunder বা HilltopAds OnClick Popunder কোড।
+                    </p>
+                    <div className="text-[10px] text-emerald-400 font-mono font-bold">
+                      রেটিং: ⭐⭐⭐⭐⭐ (সর্বোচ্চ ইনকাম: $3 - $10+ CPM)
+                    </div>
+                  </div>
+
+                  {/* Slot 5: Social Bar / In-Page Push */}
+                  <div className="p-3.5 bg-[#121A26] border border-[#1E2B3E] rounded-xl space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#D9A45B]">5. Social Bar / Push</span>
+                      <span className="font-mono text-[10px] text-slate-400">Floating Alert</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      <strong>স্লট:</strong> <code className="text-teal-300">floating_corner</code> (গ্লোবাল স্ক্রিপ্ট)।
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      <strong>সেরা ফরম্যাট:</strong> Adsterra Social Bar কোড (ইউজারের ডিভাইসে সুন্দর নোটিফিকেশন ভাসে)।
+                    </p>
+                    <div className="text-[10px] text-amber-300/90 font-mono">
+                      রেটিং: ⭐⭐⭐⭐⭐ (সাধারণ ব্যানারের চেয়ে ৩০-৪০% বেশি CTR)
+                    </div>
+                  </div>
+
+                  {/* Slot 6: Bottom Placement */}
+                  <div className="p-3.5 bg-[#121A26] border border-[#1E2B3E] rounded-xl space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#D9A45B]">6. Bottom Page Banner</span>
+                      <span className="font-mono text-[10px] text-slate-400">728x90 / 300x250</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      <strong>স্লট:</strong> <code className="text-teal-300">bottom_placement</code> (মুভি লিস্টের নিচে)।
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      <strong>সেরা ফরম্যাট:</strong> HilltopAds বা Adcash 728x90 ব্যানার কোড।
+                    </p>
+                    <div className="text-[10px] text-slate-400 font-mono">
+                      রেটিং: ⭐⭐⭐ (ফুটার ভিউয়ার্সদের জন্য)
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Add New Ad Format Form */}
               {showNewAdModal && (
                 <div className="bg-[#121926] border-2 border-[#D9A45B]/70 rounded-2xl p-5 sm:p-6 shadow-2xl animate-fadeIn space-y-4">

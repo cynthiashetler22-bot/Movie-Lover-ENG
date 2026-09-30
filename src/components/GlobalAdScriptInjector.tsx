@@ -2,9 +2,17 @@ import React, { useEffect } from 'react';
 import { useAdmin } from '../context/AdminContext';
 
 export const GlobalAdScriptInjector: React.FC = () => {
-  const { ads, settings } = useAdmin();
+  const { ads, settings, isAdminOpen } = useAdmin();
 
   useEffect(() => {
+    // NEVER inject global ads if Admin Panel is open or admin route is accessed
+    if (isAdminOpen) return;
+    if (typeof window !== 'undefined') {
+      const p = window.location.pathname.toLowerCase();
+      const h = window.location.hash.toLowerCase();
+      if (p.includes('admin') || h.includes('admin')) return;
+    }
+
     // 1. In-head / in-body global scripts from active ads (like Popunders, Social Bars, HilltopAds, Adcash)
     const injectedElements: HTMLElement[] = [];
 

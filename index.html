@@ -47,12 +47,17 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Adcash AutoTag Integration -->
+    <!-- Adcash AutoTag Integration (Protected: Never run inside Admin panel) -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
-      aclib.runAutoTag({
-        zoneId: 'ikiz4oo0ul',
-      });
+      try {
+        var isAdmin = window.location.pathname.includes('admin') || window.location.hash.includes('admin') || localStorage.getItem('streamora_admin_auth') === 'true';
+        if (!isAdmin && typeof aclib !== 'undefined' && aclib.runAutoTag) {
+          aclib.runAutoTag({
+            zoneId: 'ikiz4oo0ul',
+          });
+        }
+      } catch(e) {}
     </script>
   </body>
 </html>
