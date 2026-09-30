@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-30T19:29:12.730Z",
+  "lastSyncedAt": "2026-09-30T19:32:16.768Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -26,10 +26,10 @@
     {
       "id": "ad-slot-2",
       "name": "Collection Secondary Banner",
-      "slot": "top_banner",
+      "slot": "floating_corner",
       "enabled": true,
       "type": "direct_link",
-      "directLinkUrl": "<script async src=\"https://ss.mrmnd.com/dynamic.js\" data-mnddynid=\"1f273cb3-0b71-4195-beb9-294883fdb3e8\"></script>",
+      "directLinkUrl": "https://splendid-garage.com/bm3.VP0/P/3fp/vYbpmIV/JzZGDr0f3nNBDGcN2bMxDBAq5/LuTzcu0bNjziYow/MfTKM_",
       "buttonText": "OPEN SPONSORED OFFER",
       "htmlScriptCode": "",
       "sponsorName": "Premier Streaming Discovery Network",
