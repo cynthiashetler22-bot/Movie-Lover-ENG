@@ -3,8 +3,8 @@ import { AdminProvider, useAdmin } from './context/AdminContext';
 import { Header } from './components/Header';
 import { MovieSlider } from './components/MovieSlider';
 import { MoviePortalGrid } from './components/MoviePortalGrid';
-import { SponsoredPlacementOne } from './components/SponsoredPlacementOne';
-import { SponsoredPlacementTwo } from './components/SponsoredPlacementTwo';
+import { AdBannerSlot } from './components/AdBannerSlot';
+import { GlobalAdScriptInjector } from './components/GlobalAdScriptInjector';
 import { Footer } from './components/Footer';
 import { FilmDetailModal } from './components/FilmDetailModal';
 import { PolicyModal } from './components/PolicyModal';
@@ -95,6 +95,9 @@ function MainAppContent() {
 
   return (
     <div className="min-h-screen bg-[#080D14] text-white font-sans selection:bg-[#D9A45B]/30 selection:text-white">
+      {/* Global Ad & Network Script Injector (for Popunders, Social Bar, Adcash AutoTag, HilltopAds) */}
+      <GlobalAdScriptInjector />
+
       {/* Toast Notification */}
       {saveChangesNotification && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#121A26] border border-[#D9A45B] text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-fadeIn">
@@ -114,6 +117,9 @@ function MainAppContent() {
         }}
       />
 
+      {/* TOP BANNER AD (728x90, 468x60, 320x50 - Adsterra, Adcash, HilltopAds) */}
+      <AdBannerSlot slot="top_banner" className="my-1 py-1" />
+
       <main id="top">
         {/* 2. TOP FEATURED MOVIES SLIDER (Moviebaaz style) */}
         <MovieSlider 
@@ -121,8 +127,8 @@ function MainAppContent() {
           onSelectFilm={handleSelectFilm} 
         />
 
-        {/* 3. FIRST ADSTERRA / SPONSORED BANNER BREAK */}
-        <SponsoredPlacementOne />
+        {/* 3. MIDDLE ADSTERRA / ADCASH / HILLTOPADS BANNER */}
+        <AdBannerSlot slot="middle_placement" />
 
         {/* 4. MAIN GLOBAL MOVIES & SERIES GRID (With live search & filters) */}
         <MoviePortalGrid
@@ -134,8 +140,8 @@ function MainAppContent() {
           setSelectedGenre={setSelectedGenre}
         />
 
-        {/* 5. SECOND ADSTERRA / SPONSORED PLACEMENT BANNER */}
-        <SponsoredPlacementTwo />
+        {/* 5. BOTTOM ADSTERRA / ADCASH / HILLTOPADS BANNER */}
+        <AdBannerSlot slot="bottom_placement" />
       </main>
 
       {/* 6. CLEAN MODERN FOOTER */}

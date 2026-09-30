@@ -9,15 +9,22 @@ import posterAlpine from '../assets/images/poster_alpine_echo_1790612825975.jpg'
 import posterTokyo from '../assets/images/poster_neon_tokyo_1790612839510.jpg';
 import posterAutumn from '../assets/images/poster_silent_echo_1790612867427.jpg';
 
+export type AdNetworkType = 'adsterra' | 'adcash' | 'hilltopads' | 'monetag' | 'propellerads' | 'custom';
+export type AdFormatType = 'popunder' | 'direct_link' | 'banner_728x90' | 'banner_300x250' | 'banner_320x50' | 'banner_468x60' | 'social_bar' | 'native_banner' | 'html_code';
+export type AdSlotPosition = 'top_banner' | 'middle_placement' | 'bottom_placement' | 'detail_modal_ad' | 'floating_corner';
+
 export interface AdUnitConfig {
   id: string;
   name: string;
-  slot: 'top_banner' | 'middle_placement' | 'bottom_placement' | 'detail_modal_ad' | 'floating_corner';
+  network?: AdNetworkType;
+  format?: AdFormatType;
+  slot: AdSlotPosition;
   enabled: boolean;
   type: 'direct_link' | 'html_code';
   directLinkUrl: string;
   buttonText: string;
   htmlScriptCode: string;
+  zoneId?: string;
   sponsorName: string;
   disclosureText: string;
 }

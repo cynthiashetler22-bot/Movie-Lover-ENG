@@ -122,17 +122,58 @@ export const AdminPortalSite: React.FC = () => {
 
   // New Ad Slot Form
   const [showNewAdModal, setShowNewAdModal] = useState(false);
+  const [selectedNetworkTab, setSelectedNetworkTab] = useState<'all' | 'adsterra' | 'adcash' | 'hilltopads' | 'custom'>('all');
   const [newAdData, setNewAdData] = useState<Omit<AdUnitConfig, 'id'>>({
     name: '',
+    network: 'adsterra',
+    format: 'banner_728x90',
     slot: 'middle_placement',
     enabled: true,
-    type: 'direct_link',
+    type: 'html_code',
     directLinkUrl: '',
     buttonText: 'VISIT SPONSORED OFFER',
     htmlScriptCode: '',
+    zoneId: '',
     sponsorName: 'Verified Partner Offer',
     disclosureText: 'Promotional sponsored partner. External destination terms apply.',
   });
+
+  const handleAddNewAd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAdData.name.trim()) {
+      triggerSaveToast('Please provide a name for this Ad Unit.');
+      return;
+    }
+    addAdUnit({
+      name: newAdData.name.trim(),
+      network: newAdData.network || 'adsterra',
+      format: newAdData.format || 'banner_728x90',
+      slot: newAdData.slot || 'middle_placement',
+      enabled: newAdData.enabled,
+      type: newAdData.type || (newAdData.htmlScriptCode?.trim() ? 'html_code' : 'direct_link'),
+      directLinkUrl: newAdData.directLinkUrl || activeAdsterraLink,
+      buttonText: newAdData.buttonText || 'VISIT SPONSORED OFFER',
+      htmlScriptCode: newAdData.htmlScriptCode || '',
+      zoneId: newAdData.zoneId || '',
+      sponsorName: newAdData.sponsorName || 'Verified Partner Offer',
+      disclosureText: newAdData.disclosureText || 'Promotional sponsored partner.',
+    });
+    setShowNewAdModal(false);
+    setNewAdData({
+      name: '',
+      network: 'adsterra',
+      format: 'banner_728x90',
+      slot: 'middle_placement',
+      enabled: true,
+      type: 'html_code',
+      directLinkUrl: '',
+      buttonText: 'VISIT SPONSORED OFFER',
+      htmlScriptCode: '',
+      zoneId: '',
+      sponsorName: 'Verified Partner Offer',
+      disclosureText: 'Promotional sponsored partner.',
+    });
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1293,30 +1334,56 @@ export const AdminPortalSite: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 3: ADSTERRA & ADS */}
+          {/* TAB 3: ADSTERRA, ADCASH & HILLTOPADS MONETIZATION MANAGER */}
           {activeTab === 'ads' && (
             <div className="space-y-6">
-              <div>
-                <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#F6F0E4]">Adsterra & Monetization Manager</h2>
-                <p className="text-xs text-[#94A3B8]">
-                  Manage direct link offers, modal sponsors, banner slots, and Adsterra smartlinks across the site.
-                </p>
+              {/* Header */}
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#F6F0E4] flex items-center gap-2">
+                    <DollarSign className="w-6 h-6 text-[#D9A45B]" />
+                    <span>Adsterra, Adcash & HilltopAds Monetization Hub</span>
+                  </h2>
+                  <p className="text-xs text-[#94A3B8] mt-1">
+                    Manage Popunders, AutoTags, Banners (728x90, 300x250), Social Bars, and Smartlinks for all major ad networks.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handle1ClickGitHubPush}
+                    disabled={isSyncingToGitHub}
+                    className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all cursor-pointer shadow-md disabled:opacity-50"
+                  >
+                    <Zap className="w-4 h-4 text-amber-300" />
+                    <span>{isSyncingToGitHub ? 'Syncing...' : '⚡ 1-Click Push Ads to GitHub'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowNewAdModal(!showNewAdModal)}
+                    className="flex items-center gap-1.5 px-4 py-2 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>{showNewAdModal ? 'Close Form' : 'Add New Ad Format Code'}</span>
+                  </button>
+                </div>
               </div>
 
               {/* Master Adsterra Smartlink Banner */}
-              <div className="bg-gradient-to-r from-[#172232] to-[#121926] border border-[#D9A45B]/50 p-5 rounded-2xl shadow-xl">
-                <div className="flex items-center justify-between mb-3">
+              <div className="bg-gradient-to-r from-[#172232] via-[#1A2535] to-[#121926] border border-[#D9A45B]/50 p-5 rounded-2xl shadow-xl">
+                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <DollarSign className="w-5 h-5 text-[#D9A45B]" />
-                    <h3 className="text-sm font-bold text-[#F6F0E4]">Master Adsterra Smartlink (Global Fallback)</h3>
+                    <h3 className="text-sm font-bold text-[#F6F0E4]">Master Direct Link / Smartlink (Global Fallback)</h3>
                   </div>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800">
-                    High CPM Smartlink
+                  <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800">
+                    Direct Link • Adsterra / HilltopAds / Adcash
                   </span>
                 </div>
 
                 <p className="text-xs text-[#94A3B8] mb-3">
-                  When a movie doesn't have an individual download link, it automatically redirects user download clicks to this master link.
+                  This master link acts as the default fallback for all movie download buttons and direct sponsor clicks.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-2.5">
@@ -1324,88 +1391,309 @@ export const AdminPortalSite: React.FC = () => {
                     type="text"
                     value={activeAdsterraLink}
                     onChange={(e) => setActiveAdsterraLink(e.target.value)}
-                    placeholder="https://beta.publishers.adsterra.com/... or your Direct Smartlink"
+                    placeholder="https://... your Adsterra Direct Link or HilltopAds Smartlink"
                     className="flex-1 px-4 py-2.5 bg-[#0A0E17] border border-[#27384D] focus:border-[#D9A45B] rounded-xl text-xs font-mono text-[#F6F0E4] focus:outline-none"
                   />
                   <button
                     onClick={() => {
                       bulkApplyAdsterraLink(activeAdsterraLink);
-                      triggerSaveToast('Master Adsterra link saved & applied!');
+                      triggerSaveToast('Master Smartlink saved & applied to all movie download buttons!');
                     }}
-                    className="px-4 py-2.5 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-bold text-xs rounded-xl cursor-pointer shadow-md"
+                    className="px-4 py-2.5 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-bold text-xs rounded-xl cursor-pointer shadow-md whitespace-nowrap"
                   >
                     Apply to All Movie Buttons
                   </button>
                 </div>
               </div>
 
-              {/* Ad Slots List */}
+              {/* Add New Ad Format Form */}
+              {showNewAdModal && (
+                <div className="bg-[#121926] border-2 border-[#D9A45B]/70 rounded-2xl p-5 sm:p-6 shadow-2xl animate-fadeIn space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#202C3F]">
+                    <div>
+                      <h3 className="text-base font-bold text-[#F6F0E4] flex items-center gap-2">
+                        <Code className="w-4 h-4 text-[#D9A45B]" />
+                        <span>Install Ad Format Code (Adsterra, Adcash, HilltopAds)</span>
+                      </h3>
+                      <p className="text-xs text-[#94A3B8]">
+                        Paste your ad network script tag, iframe, or direct link code below.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowNewAdModal(false)}
+                      className="text-xs text-[#94A3B8] hover:text-white px-3 py-1 bg-[#1A2535] rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleAddNewAd} className="space-y-4 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {/* Ad Slot Name */}
+                      <div>
+                        <label className="block text-[#CBD5E1] mb-1 font-semibold">Ad Unit Name *</label>
+                        <input
+                          type="text"
+                          required
+                          value={newAdData.name}
+                          onChange={(e) => setNewAdData({ ...newAdData, name: e.target.value })}
+                          placeholder="e.g. Adsterra 728x90 Top Header"
+                          className="w-full px-3 py-2 bg-[#0A0E17] border border-[#253448] focus:border-[#D9A45B] rounded-xl text-[#F6F0E4] focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Ad Network Selector */}
+                      <div>
+                        <label className="block text-[#CBD5E1] mb-1 font-semibold">Ad Network *</label>
+                        <select
+                          value={newAdData.network || 'adsterra'}
+                          onChange={(e) => setNewAdData({ ...newAdData, network: e.target.value as any })}
+                          className="w-full px-3 py-2 bg-[#0A0E17] border border-[#253448] focus:border-[#D9A45B] rounded-xl text-[#F6F0E4] focus:outline-none font-medium"
+                        >
+                          <option value="adsterra">Adsterra</option>
+                          <option value="adcash">Adcash</option>
+                          <option value="hilltopads">HilltopAds</option>
+                          <option value="monetag">Monetag</option>
+                          <option value="propellerads">PropellerAds</option>
+                          <option value="custom">Custom Network</option>
+                        </select>
+                      </div>
+
+                      {/* Ad Format Selector */}
+                      <div>
+                        <label className="block text-[#CBD5E1] mb-1 font-semibold">Ad Format *</label>
+                        <select
+                          value={newAdData.format || 'banner_728x90'}
+                          onChange={(e) => {
+                            const fmt = e.target.value as any;
+                            const isScript = fmt !== 'direct_link';
+                            setNewAdData({ 
+                              ...newAdData, 
+                              format: fmt,
+                              type: isScript ? 'html_code' : 'direct_link',
+                              slot: fmt === 'popunder' || fmt === 'social_bar' ? 'floating_corner' : newAdData.slot
+                            });
+                          }}
+                          className="w-full px-3 py-2 bg-[#0A0E17] border border-[#253448] focus:border-[#D9A45B] rounded-xl text-[#F6F0E4] focus:outline-none font-medium"
+                        >
+                          <option value="banner_728x90">📊 Banner (728x90 Leaderboard)</option>
+                          <option value="banner_300x250">📊 Banner (300x250 Rectangle)</option>
+                          <option value="banner_320x50">📱 Banner (320x50 / 468x60 Mobile)</option>
+                          <option value="popunder">⚡ Popunder / OnClick Script</option>
+                          <option value="social_bar">🔔 Social Bar / In-Page Push</option>
+                          <option value="native_banner">📰 Native Banner Widget</option>
+                          <option value="direct_link">🌐 Direct Link / Smartlink</option>
+                          <option value="html_code">💻 Custom HTML / JS Script</option>
+                        </select>
+                      </div>
+
+                      {/* Placement Slot */}
+                      <div>
+                        <label className="block text-[#CBD5E1] mb-1 font-semibold">Display Placement / Slot</label>
+                        <select
+                          value={newAdData.slot}
+                          onChange={(e) => setNewAdData({ ...newAdData, slot: e.target.value as any })}
+                          className="w-full px-3 py-2 bg-[#0A0E17] border border-[#253448] focus:border-[#D9A45B] rounded-xl text-[#F6F0E4] focus:outline-none font-medium"
+                        >
+                          <option value="top_banner">Top Header (Under Navbar / Above Slider)</option>
+                          <option value="middle_placement">Middle Placement (Between Slider & Movies)</option>
+                          <option value="bottom_placement">Bottom Placement (Above Footer)</option>
+                          <option value="detail_modal_ad">Inside Movie Download Dossier Modal</option>
+                          <option value="floating_corner">Global Background (Popunders, Social Bar, AutoTag)</option>
+                        </select>
+                      </div>
+
+                      {/* Direct Link input if chosen */}
+                      {newAdData.format === 'direct_link' ? (
+                        <div className="sm:col-span-2">
+                          <label className="block text-[#CBD5E1] mb-1 font-semibold">Direct Link URL *</label>
+                          <input
+                            type="text"
+                            value={newAdData.directLinkUrl}
+                            onChange={(e) => setNewAdData({ ...newAdData, directLinkUrl: e.target.value })}
+                            placeholder="https://..."
+                            className="w-full px-3 py-2 bg-[#0A0E17] border border-[#253448] rounded-xl text-[#F6F0E4] font-mono text-xs focus:border-[#D9A45B] focus:outline-none"
+                          />
+                        </div>
+                      ) : (
+                        /* HTML / Script Code Textarea */
+                        <div className="sm:col-span-2">
+                          <label className="block text-[#CBD5E1] mb-1 font-semibold">
+                            Ad Script / HTML Code Snippet (Paste exactly as provided by ad network) *
+                          </label>
+                          <textarea
+                            rows={4}
+                            required
+                            value={newAdData.htmlScriptCode}
+                            onChange={(e) => setNewAdData({ ...newAdData, htmlScriptCode: e.target.value, type: 'html_code' })}
+                            placeholder={'<script type="text/javascript" src="//acscdn.com/..."></script>\n<script>\n  // or Adsterra / HilltopAds snippet\n</script>'}
+                            className="w-full px-3 py-2 bg-[#0A0E17] border border-[#253448] rounded-xl text-[#F6F0E4] font-mono text-xs focus:border-[#D9A45B] focus:outline-none"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#202C3F]">
+                      <button
+                        type="button"
+                        onClick={() => setShowNewAdModal(false)}
+                        className="px-4 py-2 bg-[#172232] hover:bg-[#202C3F] text-[#CBD5E1] rounded-xl text-xs"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-5 py-2.5 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-bold text-xs rounded-xl shadow-lg cursor-pointer flex items-center gap-1.5"
+                      >
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>Install Ad Unit</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              {/* Network Filter Bar */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                <span className="text-xs font-mono text-[#94A3B8] mr-2">Filter Network:</span>
+                {(['all', 'adsterra', 'adcash', 'hilltopads', 'custom'] as const).map((net) => (
+                  <button
+                    key={net}
+                    onClick={() => setSelectedNetworkTab(net)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                      selectedNetworkTab === net
+                        ? 'bg-[#D9A45B] text-black shadow'
+                        : 'bg-[#141C2B] text-slate-300 hover:text-white border border-[#233145]'
+                    }`}
+                  >
+                    {net === 'all' ? 'All Networks' : net}
+                  </button>
+                ))}
+              </div>
+
+              {/* Active Configured Ad Units Cards */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-[#F6F0E4]">Configured Ad Units</h3>
-                  <button
-                    onClick={() => setShowNewAdModal(true)}
-                    className="text-xs font-semibold text-[#D9A45B] hover:underline flex items-center gap-1"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    Add Custom Ad Slot
-                  </button>
+                  <h3 className="text-sm font-bold text-[#F6F0E4]">
+                    Active Ad Slots ({ads.filter(a => selectedNetworkTab === 'all' || a.network === selectedNetworkTab).length})
+                  </h3>
+                  <span className="text-[11px] font-mono text-[#63A9A0]">
+                    Real-time Dynamic Script Engine Active
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {ads.map((ad) => (
-                    <div
-                      key={ad.id}
-                      className="bg-[#121926] border border-[#202C3F] rounded-2xl p-5 space-y-3 relative"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="text-sm font-bold text-[#F6F0E4]">{ad.name}</h4>
-                          <span className="text-[10px] font-mono text-[#94A3B8]">Slot: {ad.slot}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {ads
+                    .filter(a => selectedNetworkTab === 'all' || a.network === selectedNetworkTab)
+                    .map((ad) => (
+                      <div
+                        key={ad.id}
+                        className="bg-[#121926] border border-[#202C3F] hover:border-[#D9A45B]/50 rounded-2xl p-5 space-y-3 relative shadow-lg"
+                      >
+                        {/* Top Badges */}
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs font-bold text-white">{ad.name}</span>
+                            <span className="px-2 py-0.5 rounded-md bg-[#1B2638] text-[#D9A45B] text-[10px] font-mono font-bold uppercase border border-[#293B52]">
+                              {ad.network || 'Adsterra'}
+                            </span>
+                            <span className="px-2 py-0.5 rounded-md bg-blue-950/60 text-blue-300 text-[10px] font-mono border border-blue-800/40">
+                              {ad.format || ad.slot}
+                            </span>
+                          </div>
+
+                          <button
+                            onClick={() => {
+                              updateAdUnit(ad.id, { enabled: !ad.enabled });
+                              triggerSaveToast(`Ad "${ad.name}" ${!ad.enabled ? 'activated' : 'disabled'}!`);
+                            }}
+                            className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                              ad.enabled
+                                ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
+                                : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                            }`}
+                          >
+                            {ad.enabled ? 'ACTIVE' : 'DISABLED'}
+                          </button>
                         </div>
-                        <button
-                          onClick={() => updateAdUnit(ad.id, { enabled: !ad.enabled })}
-                          className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold transition-all cursor-pointer ${
-                            ad.enabled
-                              ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
-                              : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
-                          }`}
-                        >
-                          {ad.enabled ? 'ACTIVE' : 'DISABLED'}
-                        </button>
-                      </div>
 
-                      <div>
-                        <label className="block text-[11px] font-mono text-[#94A3B8] mb-1">Direct Offer URL</label>
-                        <input
-                          type="text"
-                          value={ad.directLinkUrl}
-                          onChange={(e) => updateAdUnit(ad.id, { directLinkUrl: e.target.value })}
-                          className="w-full px-3 py-1.5 bg-[#0D141F] border border-[#223145] rounded-lg text-xs font-mono text-[#F6F0E4]"
-                        />
-                      </div>
+                        {/* Slot target position selector */}
+                        <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+                          <div>
+                            <span className="text-[#94A3B8] block mb-1">Placement Slot:</span>
+                            <select
+                              value={ad.slot}
+                              onChange={(e) => updateAdUnit(ad.id, { slot: e.target.value as any })}
+                              className="w-full px-2 py-1 bg-[#0A0E17] border border-[#253448] rounded-lg text-white"
+                            >
+                              <option value="top_banner">Top Header Banner</option>
+                              <option value="middle_placement">Middle Placement</option>
+                              <option value="bottom_placement">Bottom Placement</option>
+                              <option value="detail_modal_ad">Movie Download Modal</option>
+                              <option value="floating_corner">Global / Background (Popunder)</option>
+                            </select>
+                          </div>
 
-                      <div>
-                        <label className="block text-[11px] font-mono text-[#94A3B8] mb-1">Button Call-to-Action</label>
-                        <input
-                          type="text"
-                          value={ad.buttonText}
-                          onChange={(e) => updateAdUnit(ad.id, { buttonText: e.target.value })}
-                          className="w-full px-3 py-1.5 bg-[#0D141F] border border-[#223145] rounded-lg text-xs text-[#F6F0E4]"
-                        />
-                      </div>
+                          <div>
+                            <span className="text-[#94A3B8] block mb-1">Ad Format:</span>
+                            <span className="px-2 py-1 bg-[#0A0E17] border border-[#253448] rounded-lg text-slate-300 block truncate">
+                              {ad.format || 'Standard Banner / Script'}
+                            </span>
+                          </div>
+                        </div>
 
-                      <div className="pt-2 flex items-center justify-between text-[11px] text-[#64748B]">
-                        <span>Sponsor: {ad.sponsorName}</span>
-                        <button
-                          onClick={() => deleteAdUnit(ad.id)}
-                          className="text-rose-400 hover:text-rose-200"
-                        >
-                          Remove Slot
-                        </button>
+                        {/* Script code or Direct Link input */}
+                        {ad.type === 'html_code' || ad.htmlScriptCode ? (
+                          <div>
+                            <label className="block text-[11px] font-mono text-[#94A3B8] mb-1">
+                              Script / HTML Code Snippet
+                            </label>
+                            <textarea
+                              rows={3}
+                              value={ad.htmlScriptCode || ''}
+                              onChange={(e) => updateAdUnit(ad.id, { htmlScriptCode: e.target.value, type: 'html_code' })}
+                              placeholder="<script ...></script>"
+                              className="w-full px-3 py-2 bg-[#0A0E17] border border-[#223145] rounded-xl text-xs font-mono text-emerald-300 focus:outline-none"
+                            />
+                          </div>
+                        ) : (
+                          <div>
+                            <label className="block text-[11px] font-mono text-[#94A3B8] mb-1">
+                              Direct Smartlink URL
+                            </label>
+                            <input
+                              type="text"
+                              value={ad.directLinkUrl || ''}
+                              onChange={(e) => updateAdUnit(ad.id, { directLinkUrl: e.target.value })}
+                              placeholder="https://..."
+                              className="w-full px-3 py-1.5 bg-[#0A0E17] border border-[#223145] rounded-xl text-xs font-mono text-[#F6F0E4]"
+                            />
+                          </div>
+                        )}
+
+                        {/* Bottom Actions */}
+                        <div className="pt-2 flex items-center justify-between text-xs border-t border-[#202C3F]">
+                          <button
+                            onClick={() => triggerSaveToast(`Ad unit "${ad.name}" changes saved!`)}
+                            className="px-3 py-1 bg-[#1A2535] hover:bg-[#D9A45B] hover:text-black text-[#D9A45B] font-bold rounded-lg text-[11px] transition-colors"
+                          >
+                            Save Code
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              if (window.confirm(`Delete ad slot "${ad.name}"?`)) {
+                                deleteAdUnit(ad.id);
+                              }
+                            }}
+                            className="text-rose-400 hover:text-rose-200 text-[11px]"
+                          >
+                            Remove Slot
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             </div>

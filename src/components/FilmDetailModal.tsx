@@ -6,6 +6,7 @@ import {
   Volume2, Check, Smartphone, Monitor, Tv
 } from 'lucide-react';
 import { useAdmin } from '../context/AdminContext';
+import { AdBannerSlot } from './AdBannerSlot';
 
 interface FilmDetailModalProps {
   film: FilmItem | null;
@@ -247,26 +248,8 @@ export const FilmDetailModal: React.FC<FilmDetailModalProps> = ({ film, onClose 
               </div>
             </div>
 
-            {/* Optional Modal Ad Banner (Safely labeled) */}
-            {modalAd && targetModalAdUrl && targetModalAdUrl !== 'YOUR_ADSTERRA_LINK' && (
-              <div className="p-3.5 bg-[#0B1019] border border-dashed border-[#D9A45B]/50 rounded-2xl flex items-center justify-between gap-3">
-                <div className="text-left">
-                  <span className="text-[10px] uppercase font-mono text-[#D9A45B] tracking-wider block">
-                    SPONSORED PARTNER
-                  </span>
-                  <span className="text-xs text-white font-medium">{modalAd.sponsorName}</span>
-                </div>
-                <a
-                  href={targetModalAdUrl}
-                  target="_blank"
-                  rel="sponsored nofollow noopener"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-black bg-[#D9A45B] hover:bg-[#e4b574] rounded-xl transition-colors cursor-pointer"
-                >
-                  <span>{modalAd.buttonText}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            )}
+            {/* Dynamic Modal Ad Slot (Adsterra, Adcash, HilltopAds, or Direct Link) */}
+            <AdBannerSlot slot="detail_modal_ad" className="my-0 py-1" />
           </div>
         </div>
 
