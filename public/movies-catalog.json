@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-28T17:43:21.810Z",
+  "lastSyncedAt": "2026-09-30T16:02:54.185Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -49,7 +49,7 @@
   ],
   "movies": [
     {
-      "title": "fdfghgfjdjk3768424351",
+      "title": "hjdj",
       "genre": "Action",
       "year": 2026,
       "duration": "115 min",
@@ -68,7 +68,7 @@
       "downloadLink720p": "YOUR_ADSTERRA_LINK",
       "downloadLink1080p": "YOUR_ADSTERRA_LINK",
       "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "id": "custom-film-1790617382447"
+      "id": "custom-film-1790784150168"
     },
     {
       "title": "hryherye",
@@ -84,7 +84,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "",
       "ratingScore": "8.8",
-      "id": "custom-film-1790614477167"
+      "id": "custom-film-1790614477167",
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-last-promise",
@@ -100,7 +103,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "8.4",
-      "editorialPick": true
+      "editorialPick": true,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-hidden-truth",
@@ -116,7 +122,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "8.5",
-      "editorialPick": true
+      "editorialPick": true,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-royal-heart",
@@ -132,7 +141,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
       "ratingScore": "8.6",
-      "editorialPick": true
+      "editorialPick": true,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-road-to-freedom",
@@ -148,7 +160,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
       "ratingScore": "8.7",
-      "editorialPick": true
+      "editorialPick": true,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-dreams-never-end",
@@ -164,7 +179,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
       "ratingScore": "8.8",
-      "editorialPick": true
+      "editorialPick": true,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-the-survivor",
@@ -180,7 +198,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
       "ratingScore": "8.9",
-      "editorialPick": true
+      "editorialPick": true,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-taar-porosh",
@@ -196,7 +217,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "9.0",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-forgotten-room",
@@ -212,7 +236,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "9.1",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-beyond-mountains",
@@ -228,7 +255,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
       "ratingScore": "9.2",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-rainy-hearts",
@@ -244,7 +274,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
       "ratingScore": "9.3",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-black-veil",
@@ -260,7 +293,10 @@
       "accentHue": "#9381FF",
       "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
       "ratingScore": "9.4",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-moments-of-love",
@@ -276,7 +312,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
       "ratingScore": "9.5",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-final-mission",
@@ -292,7 +331,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "9.6",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-enchanted-forest",
@@ -308,7 +350,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "9.7",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-silent-tears",
@@ -324,7 +369,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
       "ratingScore": "9.8",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-city-of-dreams",
@@ -340,7 +388,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
       "ratingScore": "8.4",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-shadow-man",
@@ -356,7 +407,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
       "ratingScore": "8.5",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-forever-with-you",
@@ -372,7 +426,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
       "ratingScore": "8.6",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-brave-soul",
@@ -388,7 +445,10 @@
       "accentHue": "#63A9A0",
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "8.7",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     },
     {
       "id": "col-winter-letters",
@@ -404,7 +464,10 @@
       "accentHue": "#D9A45B",
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "8.8",
-      "editorialPick": false
+      "editorialPick": false,
+      "downloadLink720p": "YOUR_ADSTERRA_LINK",
+      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
+      "downloadLink4k": "YOUR_ADSTERRA_LINK"
     }
   ]
 }
