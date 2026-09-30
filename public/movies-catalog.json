@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-30T19:38:48.625Z",
+  "lastSyncedAt": "2026-09-30T19:44:23.565Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -81,12 +81,12 @@
       "name": "Banner",
       "network": "custom",
       "format": "banner_320x50",
-      "slot": "floating_corner",
+      "slot": "middle_placement",
       "enabled": true,
       "type": "html_code",
       "directLinkUrl": "YOUR_ADSTERRA_LINK",
       "buttonText": "VISIT SPONSORED OFFER",
-      "htmlScriptCode": "<div data-mndbanid=\"2f7dc8f7-c62d-4c3f-a70c-d22b1b432215\"></div>",
+      "htmlScriptCode": "<script>\n(function(ilqajv){\nvar d = document,\n    s = d.createElement('script'),\n    l = d.currentScript || d.scripts[d.scripts.length - 1];\ns.settings = ilqajv || {};\ns.src = \"\\/\\/truthful-game.com\\/b\\/X\\/V.sMdGG-lp0_YTWScq\\/JeJmx9LuwZQUXllkiPCT\\/ca0_N\\/zMYP0WOpDok\\/tNNQz\\/Qa3UN\\/jvQz5RMnwL\";\ns.async = true;\ns.referrerPolicy = 'no-referrer-when-downgrade';\nl.parentNode.insertBefore(s, l);\n})({})\n</script>",
       "zoneId": "",
       "sponsorName": "Verified Partner Offer",
       "disclosureText": "Promotional sponsored partner.",
