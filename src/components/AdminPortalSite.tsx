@@ -77,6 +77,7 @@ export const AdminPortalSite: React.FC = () => {
     oneClickPullFromGitHub,
     downloadBackupJSON,
     importBackupJSON,
+    hasUnsavedCloudChanges,
   } = useAdmin();
 
   const [activeTab, setActiveTab] = useState<'overview' | 'movies' | 'ads' | 'github_sync' | 'settings'>('overview');
@@ -593,6 +594,31 @@ export const AdminPortalSite: React.FC = () => {
 
         {/* MAIN WORKSPACE CONTENT */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+          {/* Top Unsynced Alert Banner */}
+          {hasUnsavedCloudChanges && (
+            <div className="mb-6 p-4 bg-gradient-to-r from-amber-950/90 via-amber-900/70 to-slate-900 border border-amber-500/60 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-2xl animate-fadeIn">
+              <div className="flex items-center gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 animate-bounce" />
+                <div>
+                  <div className="text-xs font-bold text-white font-mono flex items-center gap-2">
+                    <span>Unsaved Cloud Changes! (লোকাল পরিবর্তন গিটহাবে পুশ করার জন্য প্রস্তুত)</span>
+                  </div>
+                  <div className="text-[11px] text-amber-200/90 mt-0.5">
+                    Click 1-Click Push to permanently commit changes to GitHub & Cloudflare Workers so all users on any browser see them.
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handle1ClickGitHubPush}
+                disabled={isSyncingToGitHub}
+                className="px-4 py-2 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-black text-xs rounded-xl shadow-lg shadow-amber-500/30 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <Zap className="w-4 h-4" />
+                <span>{isSyncingToGitHub ? 'Pushing Live...' : '⚡ 1-Click Push to GitHub'}</span>
+              </button>
+            </div>
+          )}
           {/* TAB 1: OVERVIEW */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
@@ -744,7 +770,18 @@ export const AdminPortalSite: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handle1ClickGitHubPush}
+                    disabled={isSyncingToGitHub}
+                    className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all cursor-pointer shadow-md disabled:opacity-50"
+                    title="Commit all additions and deletions to GitHub repository"
+                  >
+                    <Zap className="w-4 h-4 text-amber-300" />
+                    <span>{isSyncingToGitHub ? 'Syncing...' : '⚡ 1-Click Push to GitHub'}</span>
+                  </button>
+
                   <button
                     onClick={() => {
                       if (showMovieForm && !editingMovieId) {
@@ -943,36 +980,89 @@ export const AdminPortalSite: React.FC = () => {
 
                       {/* DOWNLOAD LINKS & ADSTERRA INTEGRATION */}
                       <div className="sm:col-span-3 p-4 bg-[#0B1019] border border-[#223145] rounded-xl space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
                           <span className="font-semibold text-xs text-[#D9A45B] flex items-center gap-1.5">
                             <DollarSign className="w-3.5 h-3.5" />
-                            Direct Download & Adsterra Smartlinks
+                            Direct Video Download Links & Auto-Quality Generator
                           </span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setMovieFormData({
-                                ...movieFormData,
-                                downloadLink720p: activeAdsterraLink,
-                                downloadLink1080p: activeAdsterraLink,
-                                downloadLink4k: activeAdsterraLink,
-                              });
-                              triggerSaveToast('Filled all download buttons with Master Adsterra link!');
-                            }}
-                            className="text-[11px] font-mono text-[#63A9A0] hover:underline"
-                          >
-                            Fill All with Master Link ({activeAdsterraLink ? 'Active' : 'Not set'})
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const master = movieFormData.masterVideoLink || activeAdsterraLink;
+                                if (!master) {
+                                  triggerSaveToast('Please enter a Master Video / Cloud Link or configure Adsterra first.');
+                                  return;
+                                }
+                                setMovieFormData({
+                                  ...movieFormData,
+                                  downloadLink480p: master.includes('#') ? master : `${master}#480p`,
+                                  downloadLink720p: master.includes('#') ? master : `${master}#720p`,
+                                  downloadLink1080p: master.includes('#') ? master : `${master}#1080p`,
+                                  downloadLink4k: master.includes('#') ? master : `${master}#4k`,
+                                });
+                                triggerSaveToast('⚡ Auto-generated 480p, 720p, 1080p, and 4K links from Master link!');
+                              }}
+                              className="px-2.5 py-1 bg-[#1A2535] hover:bg-[#D9A45B] hover:text-black text-[#D9A45B] rounded-lg text-[11px] font-mono font-bold transition-all border border-[#283B52]"
+                            >
+                              ⚡ Auto-Generate All 4 Qualities
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setMovieFormData({
+                                  ...movieFormData,
+                                  downloadLink480p: activeAdsterraLink,
+                                  downloadLink720p: activeAdsterraLink,
+                                  downloadLink1080p: activeAdsterraLink,
+                                  downloadLink4k: activeAdsterraLink,
+                                });
+                                triggerSaveToast('Filled all download buttons with Master Adsterra link!');
+                              }}
+                              className="text-[11px] font-mono text-[#63A9A0] hover:underline"
+                            >
+                              Fill with Adsterra
+                            </button>
+                          </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {/* Master Video / Cloud File Link */}
+                        <div>
+                          <label className="block text-slate-300 mb-1 font-semibold text-xs">
+                            Master Full Movie Cloud Link (Google Drive, Mega, TeraBox, StreamTape, Direct Server)
+                          </label>
+                          <input
+                            type="text"
+                            value={movieFormData.masterVideoLink || ''}
+                            onChange={(e) => setMovieFormData({ ...movieFormData, masterVideoLink: e.target.value })}
+                            placeholder="https://drive.google.com/... or https://mega.nz/... or Direct Server URL"
+                            className="w-full px-3 py-2 bg-[#0D141F] border border-[#223145] rounded-xl text-white font-mono text-xs focus:border-[#D9A45B] focus:outline-none"
+                          />
+                          <p className="text-[11px] text-slate-400 mt-1">
+                            💡 You can provide a single high quality master link above, or give separate links for each quality below.
+                          </p>
+                        </div>
+
+                        {/* Quality link grid (480p, 720p, 1080p, 4k) */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+                          <div>
+                            <label className="block text-teal-400 mb-1 font-mono text-[11px]">480p SD (Mobile)</label>
+                            <input
+                              type="text"
+                              value={movieFormData.downloadLink480p || ''}
+                              onChange={(e) => setMovieFormData({ ...movieFormData, downloadLink480p: e.target.value })}
+                              placeholder="https://... 480p link"
+                              className="w-full px-2.5 py-1.5 bg-[#0D141F] border border-[#223145] rounded-lg text-[#F6F0E4] font-mono text-[11px]"
+                            />
+                          </div>
+
                           <div>
                             <label className="block text-[#63A9A0] mb-1 font-mono text-[11px]">720p HD Link</label>
                             <input
                               type="text"
                               value={movieFormData.downloadLink720p || ''}
                               onChange={(e) => setMovieFormData({ ...movieFormData, downloadLink720p: e.target.value })}
-                              placeholder="https://... or Adsterra"
+                              placeholder="https://... 720p link"
                               className="w-full px-2.5 py-1.5 bg-[#0D141F] border border-[#223145] rounded-lg text-[#F6F0E4] font-mono text-[11px]"
                             />
                           </div>
@@ -983,7 +1073,7 @@ export const AdminPortalSite: React.FC = () => {
                               type="text"
                               value={movieFormData.downloadLink1080p || ''}
                               onChange={(e) => setMovieFormData({ ...movieFormData, downloadLink1080p: e.target.value })}
-                              placeholder="https://... or Adsterra"
+                              placeholder="https://... 1080p link"
                               className="w-full px-2.5 py-1.5 bg-[#0D141F] border border-[#223145] rounded-lg text-[#F6F0E4] font-mono text-[11px]"
                             />
                           </div>
@@ -994,9 +1084,22 @@ export const AdminPortalSite: React.FC = () => {
                               type="text"
                               value={movieFormData.downloadLink4k || ''}
                               onChange={(e) => setMovieFormData({ ...movieFormData, downloadLink4k: e.target.value })}
-                              placeholder="https://... or Adsterra"
+                              placeholder="https://... 4k link"
                               className="w-full px-2.5 py-1.5 bg-[#0D141F] border border-[#223145] rounded-lg text-[#F6F0E4] font-mono text-[11px]"
                             />
+                          </div>
+                        </div>
+
+                        {/* Bengali & English Guide Explanation Box */}
+                        <div className="p-3 bg-[#070B12] rounded-xl border border-[#1E2B3E] text-[11px] text-slate-300 space-y-1">
+                          <div className="font-bold text-[#D9A45B]">
+                            ❓ ফাইল আপলোড ও কোয়ালিটি কনভার্ট সংক্রান্ত নির্দেশিকা (File Upload & Quality FAQ):
+                          </div>
+                          <div>
+                            • <strong>High Quality ফাইল দিলে কি automatic convert হবে?</strong> হ্যাঁ, উপরে মাস্টার লিঙ্ক দিয়ে <strong>'⚡ Auto-Generate All 4 Qualities'</strong> বাটনে ক্লিক করলেই স্বয়ংক্রিয়ভাবে 480p, 720p, 1080p ও 4K বাটন তৈরি হয়ে যাবে! অথবা আলাদা আলাদা লিঙ্কও দিতে পারেন।
+                          </div>
+                          <div>
+                            • <strong>সরাসরি গিটহাবে ভিডিও ফাইল আপলোড:</strong> ফুল মুভি সাধারণত ১-৫ গিগাবাইট হয়ে থাকে, কিন্তু GitHub-এর ফাইল সাইজ লিমিট সর্বোচ্চ ১০০ মেগাবাইট (100MB)। তাই রিয়েল মুভি সাইটগুলোতে ভিডিও ফাইল ক্লাউড স্টোরেজে (Google Drive, Mega, TeraBox, StreamTape, FastServer) রেখে লিংক দেওয়া হয়।
                           </div>
                         </div>
                       </div>
@@ -1026,20 +1129,36 @@ export const AdminPortalSite: React.FC = () => {
                     </div>
 
                     {/* Submit Bar */}
-                    <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#202C3F]">
+                    <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-[#202C3F]">
                       <button
                         type="button"
                         onClick={handleResetMovieForm}
-                        className="px-4 py-2 bg-[#172232] hover:bg-[#202C3F] text-[#CBD5E1] rounded-xl text-xs"
+                        className="px-4 py-2.5 bg-[#172232] hover:bg-[#202C3F] text-[#CBD5E1] rounded-xl text-xs font-semibold"
                       >
                         Cancel
                       </button>
+
+                      {/* Regular Save */}
                       <button
                         type="submit"
-                        className="px-5 py-2.5 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-bold text-xs rounded-xl shadow-lg cursor-pointer flex items-center gap-1.5"
+                        className="px-4 py-2.5 bg-[#1E293B] hover:bg-[#28384E] text-[#F6F0E4] font-bold text-xs rounded-xl border border-[#334155] shadow-md cursor-pointer flex items-center gap-1.5"
                       >
-                        <CheckCircle2 className="w-4 h-4" />
-                        {editingMovieId ? 'Save & Update Movie' : 'Save to Catalogue'}
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        <span>{editingMovieId ? 'Save & Update (Local)' : 'Save to Catalogue'}</span>
+                      </button>
+
+                      {/* 1-Click Save & Push directly to GitHub */}
+                      <button
+                        type="button"
+                        onClick={async (e) => {
+                          handleSaveMovie(e);
+                          await handle1ClickGitHubPush();
+                        }}
+                        disabled={isSyncingToGitHub}
+                        className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-black font-black text-xs rounded-xl shadow-lg shadow-amber-500/20 cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                      >
+                        <Zap className="w-4 h-4" />
+                        <span>{isSyncingToGitHub ? 'Pushing Live...' : '⚡ Save & Push Live to GitHub'}</span>
                       </button>
                     </div>
                   </form>

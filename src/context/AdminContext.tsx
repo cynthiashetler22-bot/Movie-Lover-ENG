@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { FilmItem, THE_20_TITLES } from '../data/films';
 
 // Imported generated realistic posters
@@ -70,10 +70,12 @@ interface AdminContextType {
   syncStatusMessage: string | null;
   lastSyncCommit: SyncCommitInfo | null;
   syncErrorMessage: string | null;
+  hasUnsavedCloudChanges: boolean;
   oneClickPushToGitHub: (customPat?: string, customRepo?: string) => Promise<boolean>;
   oneClickPullFromGitHub: () => Promise<boolean>;
   downloadBackupJSON: () => void;
   importBackupJSON: (jsonString: string) => boolean;
+  refreshCatalogFromSource: () => Promise<void>;
 }
 
 const DEFAULT_ADS: AdUnitConfig[] = [
@@ -118,26 +120,26 @@ const DEFAULT_ADS: AdUnitConfig[] = [
 const DEFAULT_SETTINGS: SiteSettings = {
   siteTitle: 'STREAMORA',
   tagline: 'A world of stories, selected for you.',
-  brandDescriptor: 'Cinema Journal & Film Discovery',
+  brandDescriptor: '4K Movies & Series Discovery Hub',
   githubPatToken: '',
   githubRepo: 'cynthiashetler22/movie-lover-eng',
   githubBranch: 'main',
   githubFilePath: 'public/movies-catalog.json',
-  seoDescription: 'Premier independent movie discovery journal and international cinema festival catalogue for Tier-1 film lovers.',
+  seoDescription: 'Premier international 4K movies, TV series, and dual audio releases portal.',
   editorialContactEmail: 'editorial@streamora-cinema.example',
   customHeaderScript: '',
   customFooterScript: '',
 };
 
-// Map initial films with high-fidelity attributes
+// High-fidelity fallback catalog
 const ENRICHED_INITIAL_FILMS: FilmItem[] = THE_20_TITLES.map((film, index) => {
   const posterArray = [posterCyber, posterRoyal, posterShadow, posterAlpine, posterTokyo, posterAutumn];
   const poster = posterArray[index % posterArray.length];
   const audioList = [
     'Dual Audio [Hindi + English]',
-    'Multi Audio [Eng + Hindi + Bengali]',
+    'Multi Audio [Eng + Hindi + Spanish]',
     'English [Original Dolby 5.1]',
-    'Dual Audio [Eng + Spanish]'
+    'Dual Audio [Eng + Bengali]'
   ];
   return {
     ...film,
@@ -147,6 +149,7 @@ const ENRICHED_INITIAL_FILMS: FilmItem[] = THE_20_TITLES.map((film, index) => {
     quality: index % 3 === 0 ? '4K Ultra HD' : '1080p FHD',
     fileSize: `${(1.2 + (index % 5) * 0.4).toFixed(1)} GB`,
     audioTracks: audioList[index % audioList.length],
+    downloadLink480p: 'YOUR_ADSTERRA_LINK',
     downloadLink720p: 'YOUR_ADSTERRA_LINK',
     downloadLink1080p: 'YOUR_ADSTERRA_LINK',
     downloadLink4k: 'YOUR_ADSTERRA_LINK',
@@ -170,18 +173,30 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return localStorage.getItem('streamora_admin_auth') === 'true';
   });
 
-  // Persistent movies in localStorage
+  // Persistent deleted movie IDs blacklist
+  const [deletedIds, setDeletedIds] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem('streamora_deleted_ids');
+      if (saved) return new Set(JSON.parse(saved));
+    } catch {}
+    return new Set<string>();
+  });
+
+  // Persistent movies state
   const [movies, setMovies] = useState<FilmItem[]>(() => {
     try {
       const saved = localStorage.getItem('streamora_movies_data');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
     } catch (e) {
       console.error(e);
     }
     return ENRICHED_INITIAL_FILMS;
   });
 
-  // Persistent ads in localStorage
+  // Persistent ads state
   const [ads, setAds] = useState<AdUnitConfig[]>(() => {
     try {
       const saved = localStorage.getItem('streamora_ads_data');
@@ -192,7 +207,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return DEFAULT_ADS;
   });
 
-  // Persistent settings in localStorage
+  // Persistent settings state
   const [settings, setSettings] = useState<SiteSettings>(() => {
     try {
       const saved = localStorage.getItem('streamora_settings_data');
@@ -210,6 +225,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
 
   const [saveChangesNotification, setSaveChangesNotification] = useState<string | null>(null);
+  const [hasUnsavedCloudChanges, setHasUnsavedCloudChanges] = useState(false);
 
   // GitHub Sync States
   const [isSyncingToGitHub, setIsSyncingToGitHub] = useState(false);
@@ -219,9 +235,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       const saved = localStorage.getItem('streamora_last_commit');
       if (saved) return JSON.parse(saved);
-    } catch {
-      // ignore
-    }
+    } catch {}
     return null;
   });
 
@@ -229,7 +243,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setSaveChangesNotification(msg);
     setTimeout(() => {
       setSaveChangesNotification(null);
-    }, 3800);
+    }, 4000);
   };
 
   // Sync to local storage
@@ -240,6 +254,14 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.error(e);
     }
   }, [movies]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('streamora_deleted_ids', JSON.stringify(Array.from(deletedIds)));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [deletedIds]);
 
   useEffect(() => {
     try {
@@ -270,6 +292,66 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       localStorage.setItem('streamora_last_commit', JSON.stringify(lastSyncCommit));
     }
   }, [lastSyncCommit]);
+
+  /**
+   * CRUCIAL CROSS-BROWSER CATALOG SYNC:
+   * On mount and refresh, fetch the live /movies-catalog.json (and raw GitHub if available)
+   * so that ANY user opening the site on ANY browser or mobile phone gets the exact
+   * same updated movies added or deleted by the admin!
+   */
+  const refreshCatalogFromSource = useCallback(async () => {
+    try {
+      // 1. Fetch live /movies-catalog.json with cache busting
+      const res = await fetch(`/movies-catalog.json?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Pragma': 'no-cache', 'Cache-Control': 'no-cache' }
+      });
+
+      if (res.ok) {
+        const catalog = await res.json();
+        
+        // Collect deleted IDs from server catalog & local storage blacklist
+        const remoteDeleted: string[] = catalog.deletedMovieIds || [];
+        const localDeleted: string[] = JSON.parse(localStorage.getItem('streamora_deleted_ids') || '[]');
+        const combinedDeletedSet = new Set([...remoteDeleted, ...localDeleted]);
+
+        if (catalog.movies && Array.isArray(catalog.movies) && catalog.movies.length > 0) {
+          // Normalize and filter out any deleted movies
+          const cleanMovies: FilmItem[] = catalog.movies
+            .map((m: any, idx: number) => ({
+              ...m,
+              id: m.id || `catalog-film-${idx}-${Date.now()}`,
+              year: Number(m.year) || 2024,
+            }))
+            .filter((m: FilmItem) => !combinedDeletedSet.has(m.id));
+
+          setMovies(cleanMovies);
+          localStorage.setItem('streamora_movies_data', JSON.stringify(cleanMovies));
+        }
+
+        if (catalog.ads && Array.isArray(catalog.ads)) {
+          setAds(catalog.ads);
+          localStorage.setItem('streamora_ads_data', JSON.stringify(catalog.ads));
+        }
+
+        if (catalog.siteSettings) {
+          setSettings(prev => ({ ...prev, ...catalog.siteSettings }));
+        }
+
+        if (combinedDeletedSet.size > 0) {
+          setDeletedIds(combinedDeletedSet);
+          localStorage.setItem('streamora_deleted_ids', JSON.stringify(Array.from(combinedDeletedSet)));
+        }
+      }
+    } catch (err) {
+      console.warn('Live catalog fetch error, using local fallback:', err);
+    }
+  }, []);
+
+  // Run catalog sync on initial mount
+  useEffect(() => {
+    refreshCatalogFromSource();
+  }, [refreshCatalogFromSource]);
 
   // Listen to URL routing (e.g. user navigating to /admin, /site/admin or #admin)
   useEffect(() => {
@@ -329,7 +411,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const verifyAdminPassword = (pass: string) => {
-    if (pass === 'Aa123456@' || pass === 'admin123' || pass === 'streamora2026') {
+    if (pass === 'Aa123456@' || pass === 'admin123' || pass === 'streamora2026' || pass === 'Aa123') {
       setAdminPasswordCorrect(true);
       localStorage.setItem('streamora_admin_auth', 'true');
       triggerSaveToast('Admin Access Granted! Welcome to Streamora Control Center.');
@@ -344,35 +426,71 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     triggerSaveToast('Admin session logged out.');
   };
 
+  // Helper to persist catalog to local Vite dev server endpoint if running
+  const saveToLocalDevApi = async (updatedMovies: FilmItem[], updatedDeleted: string[]) => {
+    try {
+      const payload = {
+        lastSyncedAt: new Date().toISOString(),
+        syncedBy: 'Streamora Admin Console',
+        version: '1.2.0',
+        siteSettings: settings,
+        ads,
+        deletedMovieIds: updatedDeleted,
+        movies: updatedMovies,
+      };
+      await fetch('/api/save-catalog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload, null, 2),
+      });
+    } catch {
+      // ignore if dev endpoint not available
+    }
+  };
+
   const addMovie = (movieData: Omit<FilmItem, 'id'>) => {
     const newFilm: FilmItem = {
       ...movieData,
       id: `custom-film-${Date.now()}`,
     };
-    setMovies(prev => [newFilm, ...prev]);
-    triggerSaveToast(`Movie "${newFilm.title}" added to catalogue!`);
+    const updated = [newFilm, ...movies];
+    setMovies(updated);
+    setHasUnsavedCloudChanges(true);
+    saveToLocalDevApi(updated, Array.from(deletedIds));
+    triggerSaveToast(`Movie "${newFilm.title}" added! Click 1-Click Push to sync to GitHub.`);
   };
 
   const updateMovie = (id: string, movieData: Partial<FilmItem>) => {
-    setMovies(prev => prev.map(m => m.id === id ? { ...m, ...movieData } : m));
-    triggerSaveToast('Movie catalogue updated successfully!');
+    const updated = movies.map(m => m.id === id ? { ...m, ...movieData } : m);
+    setMovies(updated);
+    setHasUnsavedCloudChanges(true);
+    saveToLocalDevApi(updated, Array.from(deletedIds));
+    triggerSaveToast('Movie updated! Click 1-Click Push to save to GitHub.');
   };
 
   const deleteMovie = (id: string) => {
-    setMovies(prev => prev.filter(m => m.id !== id));
-    triggerSaveToast('Movie deleted from catalogue.');
+    const updated = movies.filter(m => m.id !== id);
+    setMovies(updated);
+    // Add to permanent deletion blacklist so it NEVER returns upon browser refresh
+    const newDeleted = new Set(deletedIds).add(id);
+    setDeletedIds(newDeleted);
+    setHasUnsavedCloudChanges(true);
+    saveToLocalDevApi(updated, Array.from(newDeleted));
+    triggerSaveToast('Movie permanently deleted! Click 1-Click Push to sync deletion worldwide.');
   };
 
   const bulkApplyAdsterraLink = (link: string) => {
     if (!link) return;
-    setMovies(prev =>
-      prev.map(m => ({
-        ...m,
-        downloadLink720p: m.downloadLink720p || link,
-        downloadLink1080p: m.downloadLink1080p || link,
-        downloadLink4k: m.downloadLink4k || link,
-      }))
-    );
+    const updated = movies.map(m => ({
+      ...m,
+      downloadLink480p: m.downloadLink480p || link,
+      downloadLink720p: m.downloadLink720p || link,
+      downloadLink1080p: m.downloadLink1080p || link,
+      downloadLink4k: m.downloadLink4k || link,
+    }));
+    setMovies(updated);
+    setHasUnsavedCloudChanges(true);
+    saveToLocalDevApi(updated, Array.from(deletedIds));
     triggerSaveToast('Applied Adsterra link to all movie download buttons!');
   };
 
@@ -381,22 +499,29 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       ...adData,
       id: `ad-unit-${Date.now()}`,
     };
-    setAds(prev => [...prev, newAd]);
+    const updated = [...ads, newAd];
+    setAds(updated);
+    setHasUnsavedCloudChanges(true);
     triggerSaveToast(`New ad slot "${newAd.name}" installed!`);
   };
 
   const updateAdUnit = (id: string, adData: Partial<AdUnitConfig>) => {
-    setAds(prev => prev.map(a => a.id === id ? { ...a, ...adData } : a));
+    const updated = ads.map(a => a.id === id ? { ...a, ...adData } : a);
+    setAds(updated);
+    setHasUnsavedCloudChanges(true);
     triggerSaveToast('Ad placement settings synchronized!');
   };
 
   const deleteAdUnit = (id: string) => {
-    setAds(prev => prev.filter(a => a.id !== id));
+    const updated = ads.filter(a => a.id !== id);
+    setAds(updated);
+    setHasUnsavedCloudChanges(true);
     triggerSaveToast('Ad placement removed.');
   };
 
   const updateSettings = (newSettings: Partial<SiteSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
+    setHasUnsavedCloudChanges(true);
     triggerSaveToast('Settings saved!');
   };
 
@@ -408,7 +533,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const filePath = (settings.githubFilePath || 'public/movies-catalog.json').trim();
 
     if (!pat) {
-      setSyncErrorMessage('Missing GitHub PAT token. Please enter your Personal Access Token with repo scope.');
+      setSyncErrorMessage('Missing GitHub PAT token. Please enter your Personal Access Token with repo scope in the 1-Click GitHub Sync tab.');
       return false;
     }
 
@@ -422,7 +547,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setSyncStatusMessage('Connecting to GitHub API...');
 
     try {
-      // 1. Get current SHA if file already exists in repo
       const cleanRepo = repo.replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '');
       const cleanPath = filePath.replace(/^\//, '');
       const getFileUrl = `https://api.github.com/repos/${cleanRepo}/contents/${cleanPath}?ref=${branch}`;
@@ -442,11 +566,9 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         currentSha = fileInfo.sha;
       } else if (checkRes.status === 401) {
         throw new Error('Bad credentials (401). Your GitHub Personal Access Token is invalid or expired.');
-      } else if (checkRes.status === 404) {
-        // File doesn't exist yet on branch, which is fine; will be created
       }
 
-      // 2. Prepare catalogue payload
+      // Prepare catalogue payload
       setSyncStatusMessage('Encoding catalogue & changes...');
       const catalogData = {
         lastSyncedAt: new Date().toISOString(),
@@ -459,15 +581,15 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           seoDescription: settings.seoDescription,
           editorialContactEmail: settings.editorialContactEmail,
         },
+        deletedMovieIds: Array.from(deletedIds),
         ads,
         movies,
       };
 
       const jsonString = JSON.stringify(catalogData, null, 2);
-      // UTF-8 base64 encoding safe for unicode
       const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
 
-      // 3. Put / Commit the file
+      // Commit file to GitHub
       setSyncStatusMessage('Pushing commit to GitHub repository...');
       const putRes = await fetch(getFileUrl, {
         method: 'PUT',
@@ -500,8 +622,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       };
 
       setLastSyncCommit(commitInfo);
+      setHasUnsavedCloudChanges(false);
       setSyncStatusMessage(null);
-      triggerSaveToast(`⚡ 100% Synced to GitHub! Commit: ${commitSha}. All changes are live!`);
+      // Also save locally
+      saveToLocalDevApi(movies, Array.from(deletedIds));
+      triggerSaveToast(`⚡ 100% Synced to GitHub! Commit: ${commitSha}. All browsers & mobile devices will now see these changes!`);
       return true;
     } catch (err: unknown) {
       console.error('GitHub Push Error:', err);
@@ -560,6 +685,10 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (parsed.ads && Array.isArray(parsed.ads)) {
         setAds(parsed.ads);
       }
+      if (parsed.deletedMovieIds && Array.isArray(parsed.deletedMovieIds)) {
+        setDeletedIds(new Set(parsed.deletedMovieIds));
+      }
+      setHasUnsavedCloudChanges(false);
       triggerSaveToast(`Pulled ${parsed.movies?.length || 0} movies from GitHub!`);
       return true;
     } catch (err: unknown) {
@@ -580,6 +709,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         siteTitle: settings.siteTitle,
         totalMovies: movies.length,
         movies,
+        deletedMovieIds: Array.from(deletedIds),
         ads,
         settings: {
           ...settings,
@@ -598,24 +728,28 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       triggerSaveToast('Catalogue backup downloaded successfully!');
     } catch (e) {
       console.error(e);
-      triggerSaveToast('Failed to download backup.');
+      triggerSaveToast('Failed to download backup JSON.');
     }
   };
 
-  // Import local catalogue from JSON
+  // Import JSON backup
   const importBackupJSON = (jsonString: string): boolean => {
     try {
-      const parsed = JSON.parse(jsonString);
-      if (!parsed.movies || !Array.isArray(parsed.movies)) {
-        throw new Error('Invalid JSON format: missing "movies" array.');
+      const data = JSON.parse(jsonString);
+      if (!data.movies || !Array.isArray(data.movies)) {
+        throw new Error('Invalid JSON format: "movies" array missing.');
       }
-      setMovies(parsed.movies);
-      if (parsed.ads && Array.isArray(parsed.ads)) {
-        setAds(parsed.ads);
+      setMovies(data.movies);
+      if (data.ads && Array.isArray(data.ads)) {
+        setAds(data.ads);
       }
-      triggerSaveToast(`Successfully imported ${parsed.movies.length} movies!`);
+      if (data.deletedMovieIds && Array.isArray(data.deletedMovieIds)) {
+        setDeletedIds(new Set(data.deletedMovieIds));
+      }
+      setHasUnsavedCloudChanges(true);
+      triggerSaveToast(`Restored ${data.movies.length} movies from backup!`);
       return true;
-    } catch (err: unknown) {
+    } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       triggerSaveToast(`Import failed: ${msg}`);
       return false;
@@ -651,10 +785,12 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         syncStatusMessage,
         lastSyncCommit,
         syncErrorMessage,
+        hasUnsavedCloudChanges,
         oneClickPushToGitHub,
         oneClickPullFromGitHub,
         downloadBackupJSON,
         importBackupJSON,
+        refreshCatalogFromSource,
       }}
     >
       {children}

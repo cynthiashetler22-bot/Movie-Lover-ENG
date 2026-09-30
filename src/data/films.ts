@@ -9,23 +9,30 @@
 export interface FilmItem {
   id: string;
   title: string;
-  genre: 'Romance' | 'Mystery' | 'Action' | 'Adventure' | 'Drama' | 'Sci-Fi' | 'Comedy' | 'Documentary';
+  genre: 'Romance' | 'Mystery' | 'Action' | 'Adventure' | 'Drama' | 'Sci-Fi' | 'Comedy' | 'Documentary' | 'Horror' | 'Animation' | 'Thriller';
   secondaryGenre?: string;
+  category?: 'movie' | 'series';
   year: number;
   duration: string;
   director: string;
+  cast?: string;
   shortDesc: string;
   synopsis: string;
-  editorialNote: string;
-  mood: string;
+  editorialNote?: string;
+  mood?: string;
   festivalBadge?: string;
-  accentHue: string;
+  accentHue?: string;
   posterUrl?: string;
+  backdropUrl?: string;
   ratingScore?: string;
   editorialPick?: boolean;
-  quality?: string; // 4K UHD, 1080p, 720p
-  fileSize?: string; // e.g. 1.8 GB
-  audioTracks?: string; // e.g. Dual Audio [Hindi + Eng]
+  featuredSlider?: boolean;
+  quality?: string; // 4K UHD, 1080p FHD, 720p HD, 480p SD
+  fileSize?: string; // e.g. 1.8 GB, 4.6 GB
+  audioTracks?: string; // e.g. Dual Audio [Hindi + Eng], English DD 5.1
+  subtitles?: string; // e.g. English, Multi Subs [SRT]
+  masterVideoLink?: string; // Direct stream/cloud link
+  downloadLink480p?: string;
   downloadLink720p?: string;
   downloadLink1080p?: string;
   downloadLink4k?: string;
