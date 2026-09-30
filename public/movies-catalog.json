@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-30T19:23:58.900Z",
+  "lastSyncedAt": "2026-09-30T19:26:47.095Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -86,7 +86,7 @@
       "type": "html_code",
       "directLinkUrl": "YOUR_ADSTERRA_LINK",
       "buttonText": "VISIT SPONSORED OFFER",
-      "htmlScriptCode": "<div data-mndbanid=\"2f7dc8f7-c62d-4c3f-a70c-d22b1b432215\"></div>",
+      "htmlScriptCode": "",
       "zoneId": "",
       "sponsorName": "Verified Partner Offer",
       "disclosureText": "Promotional sponsored partner.",
