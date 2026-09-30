@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-30T16:02:54.185Z",
+  "lastSyncedAt": "2026-09-30T19:23:58.900Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -9,6 +9,7 @@
     "seoDescription": "Premier independent movie discovery journal and international cinema festival catalogue for Tier-1 film lovers.",
     "editorialContactEmail": "editorial@streamora-cinema.example"
   },
+  "deletedMovieIds": [],
   "ads": [
     {
       "id": "ad-slot-1",
@@ -16,7 +17,7 @@
       "slot": "middle_placement",
       "enabled": true,
       "type": "direct_link",
-      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "directLinkUrl": "<script async src=\"https://ss.mrmnd.com/native.js\"></script>",
       "buttonText": "VISIT SPONSORED OFFER",
       "htmlScriptCode": "",
       "sponsorName": "Global Entertainment Partner",
@@ -25,7 +26,7 @@
     {
       "id": "ad-slot-2",
       "name": "Collection Secondary Banner",
-      "slot": "bottom_placement",
+      "slot": "detail_modal_ad",
       "enabled": true,
       "type": "direct_link",
       "directLinkUrl": "YOUR_ADSTERRA_LINK",
@@ -45,6 +46,51 @@
       "htmlScriptCode": "",
       "sponsorName": "Verified Partner Portal",
       "disclosureText": "External partner offer. Does not imply movie download or streaming."
+    },
+    {
+      "name": "Interstitial",
+      "network": "custom",
+      "format": "social_bar",
+      "slot": "floating_corner",
+      "enabled": true,
+      "type": "html_code",
+      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "buttonText": "VISIT SPONSORED OFFER",
+      "htmlScriptCode": "<script async src=\"https://ss.mrmnd.com/interstitial.js\" data-mndintid=\"af998824-1017-46d0-a419-00c4c40b371e\"></script>",
+      "zoneId": "",
+      "sponsorName": "Verified Partner Offer",
+      "disclosureText": "Promotional sponsored partner. External destination terms apply.",
+      "id": "ad-unit-1790795424372"
+    },
+    {
+      "name": "Video Vas",
+      "network": "adsterra",
+      "format": "html_code",
+      "slot": "bottom_placement",
+      "enabled": true,
+      "type": "html_code",
+      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "buttonText": "VISIT SPONSORED OFFER",
+      "htmlScriptCode": "https://direct-league.com/dKmgFNzbd.GONXvKZUGTUC/lefm/9/u-ZHU/l-ksPxT_cA0hNTzoYxwnMMzBMdtgNxzmQJ3/NWjOAnzANwwT",
+      "zoneId": "",
+      "sponsorName": "Verified Partner Offer",
+      "disclosureText": "Promotional sponsored partner.",
+      "id": "ad-unit-1790795840988"
+    },
+    {
+      "name": "Banner",
+      "network": "custom",
+      "format": "banner_320x50",
+      "slot": "bottom_placement",
+      "enabled": true,
+      "type": "html_code",
+      "directLinkUrl": "YOUR_ADSTERRA_LINK",
+      "buttonText": "VISIT SPONSORED OFFER",
+      "htmlScriptCode": "<div data-mndbanid=\"2f7dc8f7-c62d-4c3f-a70c-d22b1b432215\"></div>",
+      "zoneId": "",
+      "sponsorName": "Verified Partner Offer",
+      "disclosureText": "Promotional sponsored partner.",
+      "id": "ad-unit-1790796204851"
     }
   ],
   "movies": [
