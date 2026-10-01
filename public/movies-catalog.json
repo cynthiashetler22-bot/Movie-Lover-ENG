@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-09-30T19:48:33.538Z",
+  "lastSyncedAt": "2026-10-01T14:40:55.053Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -12,85 +12,88 @@
   "deletedMovieIds": [],
   "ads": [
     {
-      "id": "ad-slot-1",
-      "name": "Programme Sponsored Break (Top/Mid)",
-      "slot": "middle_placement",
-      "enabled": true,
-      "type": "direct_link",
-      "directLinkUrl": "<script async src=\"https://ss.mrmnd.com/native.js\"></script>",
-      "buttonText": "VISIT SPONSORED OFFER",
-      "htmlScriptCode": "",
-      "sponsorName": "Global Entertainment Partner",
-      "disclosureText": "Sponsored third-party offer. The destination is external and may have its own terms and conditions."
-    },
-    {
-      "id": "ad-slot-2",
-      "name": "Collection Secondary Banner",
-      "slot": "floating_corner",
-      "enabled": true,
-      "type": "direct_link",
-      "directLinkUrl": "https://splendid-garage.com/bm3.VP0/P/3fp/vYbpmIV/JzZGDr0f3nNBDGcN2bMxDBAq5/LuTzcu0bNjziYow/MfTKM_",
-      "buttonText": "OPEN SPONSORED OFFER",
-      "htmlScriptCode": "",
-      "sponsorName": "Premier Streaming Discovery Network",
-      "disclosureText": "This is an external promotional link. Availability and terms are set by the destination."
-    },
-    {
-      "id": "ad-slot-3",
-      "name": "Film Dossier Modal Sponsor",
+      "id": "ad-mondiad-dynamic-header",
+      "name": "Mondiad Dynamic Smart Banner (Top Header)",
+      "network": "custom",
+      "format": "banner_728x90",
       "slot": "top_banner",
       "enabled": true,
-      "type": "direct_link",
-      "directLinkUrl": "<div>     <script type=\"text/javascript\">         aclib.runBanner({             zoneId: '12250022',         });     </script> </div>",
-      "buttonText": "EXPLORE SPONSORED PARTNER",
-      "htmlScriptCode": "",
-      "sponsorName": "Verified Partner Portal",
-      "disclosureText": "External partner offer. Does not imply movie download or streaming."
+      "type": "html_code",
+      "directLinkUrl": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "buttonText": "VISIT SPONSORED PARTNER",
+      "htmlScriptCode": "<script async src=\"https://ss.mrmnd.com/dynamic.js\" data-mnddynid=\"1f273cb3-0b71-4195-beb9-294883fdb3e8\"></script>",
+      "sponsorName": "Mondiad Premium Partner",
+      "disclosureText": "Promotional sponsored partner."
     },
     {
-      "name": "Interstitial",
+      "id": "ad-mondiad-native-middle",
+      "name": "Mondiad Native Content Banner (Between Slider & Movies)",
+      "network": "custom",
+      "format": "native_banner",
+      "slot": "middle_placement",
+      "enabled": true,
+      "type": "html_code",
+      "directLinkUrl": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "buttonText": "EXPLORE SPONSOR",
+      "htmlScriptCode": "<div data-mndazid=\"82364f0f-ca9c-44a7-8db8-77fd3ddbcacb\"></div>\n<div data-mndbanid=\"2f7dc8f7-c62d-4c3f-a70c-d22b1b432215\"></div>\n<script async src=\"https://ss.mrmnd.com/native.js\"></script>\n<script async src=\"https://ss.mrmnd.com/banner.js\"></script>",
+      "sponsorName": "Recommended Entertainment",
+      "disclosureText": "Sponsored content."
+    },
+    {
+      "id": "ad-hilltop-popunder",
+      "name": "HilltopAds High-CPM Popunder (OnClick)",
+      "network": "hilltopads",
+      "format": "popunder",
+      "slot": "floating_corner",
+      "enabled": true,
+      "type": "html_code",
+      "directLinkUrl": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "buttonText": "VISIT SPONSORED OFFER",
+      "htmlScriptCode": "<script>\n(function(ormtc){\nvar d = document,\n    s = d.createElement('script'),\n    l = d.currentScript || d.scripts[d.scripts.length - 1];\ns.settings = ormtc || {};\ns.src = \"\\/\\/truthful-game.com\\/baX.V\\/sUdNGflY0BYKWpcY\\/JeCmw9zumZXUtlTkqPtT\\/cr0aNbzWg\\/4\\/M\\/z\\/ckt\\/N\\/zRQl3CO\\/D\\/gp0yMyQ-\";\ns.async = true;\ns.referrerPolicy = 'no-referrer-when-downgrade';\nl.parentNode.insertBefore(s, l);\n})({})\n</script>",
+      "sponsorName": "HilltopAds Network",
+      "disclosureText": "High CPM background offer."
+    },
+    {
+      "id": "ad-mondiad-interstitial",
+      "name": "Mondiad High-Impact Interstitial",
       "network": "custom",
       "format": "social_bar",
       "slot": "floating_corner",
       "enabled": true,
       "type": "html_code",
-      "directLinkUrl": "YOUR_ADSTERRA_LINK",
-      "buttonText": "VISIT SPONSORED OFFER",
+      "directLinkUrl": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "buttonText": "OPEN SPONSOR",
       "htmlScriptCode": "<script async src=\"https://ss.mrmnd.com/interstitial.js\" data-mndintid=\"af998824-1017-46d0-a419-00c4c40b371e\"></script>",
-      "zoneId": "",
-      "sponsorName": "Verified Partner Offer",
-      "disclosureText": "Promotional sponsored partner. External destination terms apply.",
-      "id": "ad-unit-1790795424372"
+      "sponsorName": "Mondiad Interstitial",
+      "disclosureText": "Sponsored partner overlay."
     },
     {
-      "name": "Video Vas",
-      "network": "adsterra",
-      "format": "html_code",
+      "id": "ad-hilltop-push",
+      "name": "HilltopAds In-Page Push / Social Bar",
+      "network": "hilltopads",
+      "format": "social_bar",
+      "slot": "floating_corner",
+      "enabled": true,
+      "type": "html_code",
+      "directLinkUrl": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "buttonText": "VIEW NOTICE",
+      "htmlScriptCode": "<script>\n(function(ormtc){\nvar d = document,\n    s = d.createElement('script'),\n    l = d.currentScript || d.scripts[d.scripts.length - 1];\ns.settings = ormtc || {};\ns.src = \"\\/\\/truthful-game.com\\/b\\/XpVAs.dZGvls0_YTWLcW\\/UeCm\\/9\\/urZQUvlMkFPDTYcC0wNaztYP0\\/OuDFkmtZN\\/z\\/Qe3ZNijLQz5XMGww\";\ns.async = true;\ns.referrerPolicy = 'no-referrer-when-downgrade';\nl.parentNode.insertBefore(s, l);\n})({})\n</script>",
+      "sponsorName": "HilltopAds Social Bar",
+      "disclosureText": "Floating update."
+    },
+    {
+      "id": "ad-hilltop-modal-sponsor",
+      "name": "HilltopAds Fast Download Server (Modal)",
+      "network": "hilltopads",
+      "format": "direct_link",
       "slot": "detail_modal_ad",
       "enabled": true,
-      "type": "html_code",
-      "directLinkUrl": "YOUR_ADSTERRA_LINK",
-      "buttonText": "VISIT SPONSORED OFFER",
-      "htmlScriptCode": "<script async src=\"https://ss.mrmnd.com/dynamic.js\" data-mnddynid=\"1f273cb3-0b71-4195-beb9-294883fdb3e8\"></script>",
-      "zoneId": "",
-      "sponsorName": "Verified Partner Offer",
-      "disclosureText": "Promotional sponsored partner.",
-      "id": "ad-unit-1790795840988"
-    },
-    {
-      "name": "Banner",
-      "network": "custom",
-      "format": "banner_320x50",
-      "slot": "middle_placement",
-      "enabled": true,
-      "type": "html_code",
-      "directLinkUrl": "YOUR_ADSTERRA_LINK",
-      "buttonText": "VISIT SPONSORED OFFER",
-      "htmlScriptCode": "<script>\n(function(ilqajv){\nvar d = document,\n    s = d.createElement('script'),\n    l = d.currentScript || d.scripts[d.scripts.length - 1];\ns.settings = ilqajv || {};\ns.src = \"\\/\\/truthful-game.com\\/b\\/X\\/V.sMdGG-lp0_YTWScq\\/JeJmx9LuwZQUXllkiPCT\\/ca0_N\\/zMYP0WOpDok\\/tNNQz\\/Qa3UN\\/jvQz5RMnwL\";\ns.async = true;\ns.referrerPolicy = 'no-referrer-when-downgrade';\nl.parentNode.insertBefore(s, l);\n})({})\n</script>",
-      "zoneId": "",
-      "sponsorName": "Verified Partner Offer",
-      "disclosureText": "Promotional sponsored partner.",
-      "id": "ad-unit-1790796204851"
+      "type": "direct_link",
+      "directLinkUrl": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "buttonText": "FAST CLOUD SERVER (RECOMMENDED)",
+      "htmlScriptCode": "",
+      "sponsorName": "Ultra High-Speed Cloud Mirror",
+      "disclosureText": "Fast external partner server for high speed downloads."
     }
   ],
   "movies": [
@@ -111,11 +114,11 @@
       "quality": "1080p FHD",
       "fileSize": "1.8 GB",
       "audioTracks": "Dual Audio [Hindi + Eng]",
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "id": "custom-film-1790784150168",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "title": "hryherye",
@@ -132,10 +135,10 @@
       "posterUrl": "",
       "ratingScore": "8.8",
       "id": "custom-film-1790614477167",
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-last-promise",
@@ -152,10 +155,10 @@
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "8.4",
       "editorialPick": true,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-hidden-truth",
@@ -172,10 +175,10 @@
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "8.5",
       "editorialPick": true,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-royal-heart",
@@ -192,10 +195,10 @@
       "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
       "ratingScore": "8.6",
       "editorialPick": true,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-road-to-freedom",
@@ -212,10 +215,10 @@
       "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
       "ratingScore": "8.7",
       "editorialPick": true,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-dreams-never-end",
@@ -232,10 +235,10 @@
       "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
       "ratingScore": "8.8",
       "editorialPick": true,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-the-survivor",
@@ -252,10 +255,10 @@
       "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
       "ratingScore": "8.9",
       "editorialPick": true,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-taar-porosh",
@@ -272,10 +275,10 @@
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "9.0",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-forgotten-room",
@@ -292,10 +295,10 @@
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "9.1",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-beyond-mountains",
@@ -312,10 +315,10 @@
       "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
       "ratingScore": "9.2",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-rainy-hearts",
@@ -332,10 +335,10 @@
       "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
       "ratingScore": "9.3",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-black-veil",
@@ -352,10 +355,10 @@
       "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
       "ratingScore": "9.4",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-moments-of-love",
@@ -372,10 +375,10 @@
       "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
       "ratingScore": "9.5",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-final-mission",
@@ -392,10 +395,10 @@
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "9.6",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-enchanted-forest",
@@ -412,10 +415,10 @@
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "9.7",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-silent-tears",
@@ -432,10 +435,10 @@
       "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
       "ratingScore": "9.8",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-city-of-dreams",
@@ -452,10 +455,10 @@
       "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
       "ratingScore": "8.4",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-shadow-man",
@@ -472,10 +475,10 @@
       "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
       "ratingScore": "8.5",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-forever-with-you",
@@ -492,10 +495,10 @@
       "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
       "ratingScore": "8.6",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-brave-soul",
@@ -512,10 +515,10 @@
       "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
       "ratingScore": "8.7",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
       "id": "col-winter-letters",
@@ -532,10 +535,10 @@
       "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
       "ratingScore": "8.8",
       "editorialPick": false,
-      "downloadLink720p": "YOUR_ADSTERRA_LINK",
-      "downloadLink1080p": "YOUR_ADSTERRA_LINK",
-      "downloadLink4k": "YOUR_ADSTERRA_LINK",
-      "downloadLink480p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>"
+      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     }
   ]
 }

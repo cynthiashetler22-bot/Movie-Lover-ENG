@@ -59,6 +59,19 @@
         }
       } catch(e) {}
     </script>
+
+    <!-- Mondiad Smart Tag (Protected: Never run inside Admin panel) -->
+    <script type="text/javascript">
+      try {
+        var isAdmin = window.location.pathname.includes('admin') || window.location.hash.includes('admin') || localStorage.getItem('streamora_admin_auth') === 'true';
+        if (!isAdmin) {
+          var mndScript = document.createElement('script');
+          mndScript.async = true;
+          mndScript.src = "https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js";
+          document.body.appendChild(mndScript);
+        }
+      } catch(e) {}
+    </script>
   </body>
 </html>
 
