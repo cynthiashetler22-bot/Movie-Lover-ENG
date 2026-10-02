@@ -107,20 +107,19 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
   };
 
   // STEP 4: User clicks final "DOWNLOAD FILE NOW" button -> DELIVERS REAL MOVIE FILE!
-  const handleFinalDownloadClick = () => {
-    // Resolve genuine movie URL
-    const realUrl = getGenuineMovieDownloadUrl(film, selectedQuality, activeAdsterraLink);
-    
-    // Trigger popunder and open real download
-    triggerPopunder();
-    window.open(realUrl, '_blank', 'noopener,noreferrer');
-  };
+  const realDownloadUrl = getGenuineMovieDownloadUrl(film, selectedQuality, activeAdsterraLink);
 
   // Handle Watch Online click
   const handleWatchOnlineClick = () => {
     triggerPopunder();
-    const realStreamUrl = film.masterVideoLink || film.downloadLink1080p || activeAdsterraLink || DEFAULT_HILLTOPADS_POPUNDER_URL;
-    window.open(realStreamUrl, '_blank', 'noopener,noreferrer');
+    const realStreamUrl = film.watchOnlineUrl || film.masterVideoLink || '';
+    if (realStreamUrl && !realStreamUrl.includes('YOUR_ADSTERRA_LINK')) {
+      window.open(realStreamUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      if (downloadSectionRef.current) {
+        downloadSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
   };
 
   // Related movies
@@ -509,13 +508,44 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
                     Your {selectedQuality.toUpperCase()} File is Ready to Download
                   </h3>
 
-                  <button
-                    onClick={handleFinalDownloadClick}
-                    className="w-full py-4 bg-gradient-to-r from-[#D9A45B] via-[#E5B573] to-[#D9A45B] hover:scale-105 text-black font-black text-base uppercase tracking-wider rounded-2xl shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2.5"
+                  {/* GUARANTEED DIRECT ANCHOR LINK (Never blocked by popup blockers!) */}
+                  <a
+                    href={realDownloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      // Trigger popunder in background after click
+                      setTimeout(() => triggerPopunder(), 300);
+                    }}
+                    className="w-full py-4 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 hover:from-emerald-400 hover:to-teal-300 hover:scale-102 text-black font-black text-base uppercase tracking-wider rounded-2xl shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2.5 text-center"
                   >
                     <Download className="w-5 h-5 stroke-[2.5]" />
                     <span>🚀 DOWNLOAD FILE NOW ({selectedQuality.toUpperCase()})</span>
-                  </button>
+                  </a>
+
+                  {/* Server & Destination Box */}
+                  <div className="p-3.5 bg-[#0C121D] border border-emerald-500/30 rounded-xl text-left space-y-1.5 text-xs font-mono">
+                    <div className="flex items-center justify-between text-slate-400">
+                      <span>Cloud Server Provider:</span>
+                      <span className="text-emerald-400 font-bold">
+                        {realDownloadUrl.includes('mediafire.com') ? 'MediaFire Fast Cloud' :
+                         realDownloadUrl.includes('drive.google.com') ? 'Google Drive High-Speed' :
+                         realDownloadUrl.includes('mega.nz') ? 'Mega Cloud Storage' :
+                         'Verified High Speed Mirror'}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-300 break-all">
+                      <span className="text-slate-400">Direct Link: </span>
+                      <a 
+                        href={realDownloadUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-[#D9A45B] hover:underline"
+                      >
+                        {realDownloadUrl}
+                      </a>
+                    </div>
+                  </div>
 
                   <div className="text-[11px] text-slate-400 flex items-center justify-center gap-4 pt-1 font-mono">
                     <span>Cloud CDN • Instant Download</span>

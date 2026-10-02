@@ -32,6 +32,7 @@ export interface FilmItem {
   audioTracks?: string; // e.g. Dual Audio [Hindi + Eng], English DD 5.1
   subtitles?: string; // e.g. English, Multi Subs [SRT]
   masterVideoLink?: string; // Direct stream/cloud link
+  watchOnlineUrl?: string; // Streamtape, Doodstream, Google Drive Stream, or Embed URL
   downloadLink480p?: string;
   downloadLink720p?: string;
   downloadLink1080p?: string;

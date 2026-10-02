@@ -64,10 +64,13 @@ export function getGenuineMovieDownloadUrl(
     target = film.masterVideoLink || film.downloadLink1080p || film.downloadLink720p || '';
   }
 
-  // If target contains accidental html/script tags, clean it or fallback
+  // Strip accidental html/script tags
   if (target.includes('<script') || target.includes('<div')) {
     target = film.masterVideoLink || fallbackMasterUrl || DEFAULT_HILLTOPADS_POPUNDER_URL;
   }
+
+  // Strip auto-generated suffix hashes like #720p, #1080p, #480p, #4k
+  target = target.replace(/#(480p|720p|1080p|4k)$/i, '').trim();
 
   // If still empty, return fallback
   if (!target || target === 'YOUR_ADSTERRA_LINK') {

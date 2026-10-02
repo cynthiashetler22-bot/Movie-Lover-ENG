@@ -61,7 +61,11 @@ function MainAppContent() {
         const targetFilm = movies.find((m) => m.id === movieId);
         if (targetFilm) {
           setSelectedFilm(targetFilm);
+        } else {
+          setSelectedFilm(null);
         }
+      } else {
+        setSelectedFilm(null);
       }
     };
 
@@ -84,9 +88,7 @@ function MainAppContent() {
 
   const handleBackToHome = () => {
     setSelectedFilm(null);
-    if (window.location.hash.startsWith('#movie/')) {
-      window.history.pushState('', document.title, window.location.pathname + window.location.search);
-    }
+    window.location.hash = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

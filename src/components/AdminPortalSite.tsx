@@ -28,7 +28,8 @@ import {
   Code,
   HardDrive,
   Copy,
-  Layers
+  Layers,
+  Play,
 } from 'lucide-react';
 
 // Preset sample poster choices for quick selection
@@ -108,6 +109,9 @@ export const AdminPortalSite: React.FC = () => {
     quality: '1080p FHD',
     fileSize: '1.8 GB',
     audioTracks: 'Dual Audio [Hindi + Eng]',
+    watchOnlineUrl: '',
+    masterVideoLink: '',
+    downloadLink480p: '',
     downloadLink720p: '',
     downloadLink1080p: '',
     downloadLink4k: '',
@@ -205,6 +209,9 @@ export const AdminPortalSite: React.FC = () => {
       quality: '1080p FHD',
       fileSize: '1.8 GB',
       audioTracks: 'Dual Audio [Hindi + Eng]',
+      watchOnlineUrl: '',
+      masterVideoLink: '',
+      downloadLink480p: '',
       downloadLink720p: '',
       downloadLink1080p: '',
       downloadLink4k: '',
@@ -231,6 +238,9 @@ export const AdminPortalSite: React.FC = () => {
       quality: movie.quality || '1080p FHD',
       fileSize: movie.fileSize || '1.8 GB',
       audioTracks: movie.audioTracks || 'Dual Audio [Hindi + Eng]',
+      watchOnlineUrl: movie.watchOnlineUrl || '',
+      masterVideoLink: movie.masterVideoLink || '',
+      downloadLink480p: movie.downloadLink480p || '',
       downloadLink720p: movie.downloadLink720p || '',
       downloadLink1080p: movie.downloadLink1080p || '',
       downloadLink4k: movie.downloadLink4k || '',
@@ -1067,10 +1077,28 @@ export const AdminPortalSite: React.FC = () => {
                           </div>
                         </div>
 
+                        {/* Watch Online / Streaming Player Link */}
+                        <div>
+                          <label className="block text-emerald-300 mb-1 font-semibold text-xs flex items-center gap-1.5">
+                            <Play className="w-3.5 h-3.5 fill-emerald-300" />
+                            <span>Watch Online / Streaming Player Link (Streamtape, Doodstream, Google Drive Stream, Embed URL, or MP4)</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={movieFormData.watchOnlineUrl || ''}
+                            onChange={(e) => setMovieFormData({ ...movieFormData, watchOnlineUrl: e.target.value })}
+                            placeholder="https://streamtape.com/e/... or https://drive.google.com/file/d/.../preview or direct stream URL"
+                            className="w-full px-3 py-2 bg-[#0D141F] border border-[#223145] focus:border-emerald-400 rounded-xl text-white font-mono text-xs focus:outline-none"
+                          />
+                          <p className="text-[11px] text-slate-400 mt-1">
+                            🎬 When users click "Watch Online / Stream Player" on the movie page, it opens or plays this stream link!
+                          </p>
+                        </div>
+
                         {/* Master Video / Cloud File Link */}
                         <div>
                           <label className="block text-slate-300 mb-1 font-semibold text-xs">
-                            Master Full Movie Cloud Link (Google Drive, Mega, TeraBox, StreamTape, Direct Server)
+                            Master Full Movie Cloud Link (Google Drive, Mega, TeraBox, MediaFire, Direct Server)
                           </label>
                           <input
                             type="text"
