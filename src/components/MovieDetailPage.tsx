@@ -43,19 +43,11 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
   const [countdownSeconds, setCountdownSeconds] = useState(3);
   const downloadSectionRef = useRef<HTMLDivElement>(null);
 
-  // Track 2-click popunder sequence
-  const [qualityClickedOnce, setQualityClickedOnce] = useState<string | null>(null);
-  const [proceedClickedOnce, setProceedClickedOnce] = useState(false);
-  const [generateClickedOnce, setGenerateClickedOnce] = useState(false);
-
   // Scroll to top when film changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setGatewayStage('idle');
     setCountdownSeconds(3);
-    setQualityClickedOnce(null);
-    setProceedClickedOnce(false);
-    setGenerateClickedOnce(false);
   }, [film]);
 
   // 3-Second Countdown Timer Handler
@@ -87,50 +79,26 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
   // STEP 1: User clicks on any quality download button (e.g. 1080p)
   const handleQualityClick = (quality: '480p' | '720p' | '1080p' | '4k') => {
     setSelectedQuality(quality);
-
-    // 1st click: trigger Adcash popunder
-    if (qualityClickedOnce !== quality) {
-      triggerPopunder();
-      setQualityClickedOnce(quality);
-      return;
-    }
-
-    // 2nd click: start 3-second countdown
-    setQualityClickedOnce(null);
     setCountdownSeconds(3);
     setGatewayStage('countdown_3s');
-
-    // Smooth scroll to gateway card
-    if (downloadSectionRef.current) {
-      downloadSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    triggerPopunder();
   };
 
-  // STEP 2: User clicks "Proceed to Fast Server" button after 3 seconds
+  // STEP 2: User clicks "Proceed to Download Page" button after 3 seconds
   const handleProceedClick = () => {
-    // 1st click: trigger Adcash popunder
-    if (!proceedClickedOnce) {
-      triggerPopunder();
-      setProceedClickedOnce(true);
-      return;
-    }
-
-    // 2nd click: transition to generate link view
-    setProceedClickedOnce(false);
+    triggerPopunder();
     setGatewayStage('generate_view');
+    setTimeout(() => {
+      const generatorBox = document.getElementById('gateway-generator-box');
+      if (generatorBox) {
+        generatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   };
 
   // STEP 3: User clicks "Generate Download Link" button
   const handleGenerateLinkClick = () => {
-    // 1st click: trigger Adcash popunder
-    if (!generateClickedOnce) {
-      triggerPopunder();
-      setGenerateClickedOnce(true);
-      return;
-    }
-
-    // 2nd click: generate token
-    setGenerateClickedOnce(false);
+    triggerPopunder();
     setGatewayStage('generating_token');
   };
 
@@ -339,358 +307,106 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
             </span>
           </div>
 
-          {/* STAGE A: 4 Quality Options with INLINE 3-Second Loading & Proceed */}
+          {/* STAGE A: 4 Quality Options with INLINE 3-Second Loading & Direct Proceed */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* 480p Option */}
-            <div 
-              onClick={() => {
-                if (gatewayStage === 'idle' || selectedQuality !== '480p') {
-                  handleQualityClick('480p');
-                }
-              }}
-              className={`p-4 rounded-2xl border transition-all text-left space-y-2 relative group ${
-                selectedQuality === '480p' && (gatewayStage === 'countdown_3s' || gatewayStage === 'proceed_btn')
-                  ? 'bg-[#15202E] border-emerald-400/80 shadow-2xl ring-2 ring-emerald-500/30'
-                  : qualityClickedOnce === '480p'
-                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse cursor-pointer'
-                  : selectedQuality === '480p' && gatewayStage !== 'idle'
-                  ? 'bg-[#182436] border-[#D9A45B] shadow-xl cursor-pointer'
-                  : 'bg-[#0B1019] border-[#223145] hover:border-[#D9A45B]/80 hover:bg-[#121A26] cursor-pointer'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-extrabold text-sm text-white group-hover:text-[#D9A45B]">480p SD</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#182333] text-slate-300">~450 MB</span>
-              </div>
-              <p className="text-[11px] text-slate-400">Mobile Quality • Low Data Usage</p>
+            {[
+              { id: '480p' as const, name: '480p SD', size: '~450 MB', desc: 'Mobile Quality • Low Data Usage', color: 'text-white' },
+              { id: '720p' as const, name: '720p HD', size: '~950 MB', desc: 'Standard HD • Clear Audio & Video', color: 'text-sky-400' },
+              { id: '1080p' as const, name: '1080p FHD', size: '~1.8 GB', desc: 'Full HD 1080p • 5.1 Surround', color: 'text-[#D9A45B]', popular: true },
+              { id: '4k' as const, name: '4K UHD', size: '~5.5 GB', desc: 'Ultra High Bitrate • 2160p Cinema', color: 'text-amber-400' },
+            ].map((q) => {
+              const isSelected = selectedQuality === q.id;
+              const isCountdown = isSelected && gatewayStage === 'countdown_3s';
+              const isProceed = isSelected && gatewayStage === 'proceed_btn';
 
-              {/* INLINE 3-SECOND LOADING FOR 480p */}
-              {selectedQuality === '480p' && gatewayStage === 'countdown_3s' ? (
-                <div className="pt-2 pb-1 space-y-2.5 animate-fadeIn">
-                  <div className="flex items-center justify-between px-2.5 py-1.5 bg-black/60 rounded-xl border border-amber-500/40">
-                    <div className="flex items-center gap-2">
-                      <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/20 text-[#D9A45B] font-mono font-black text-sm border border-amber-400 shrink-0">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-40"></span>
-                        <span>{countdownSeconds}</span>
-                      </div>
-                      <span className="text-[11px] font-bold text-amber-300 truncate">
-                        {countdownSeconds === 3 ? '⚡ Connecting Node...' :
-                         countdownSeconds === 2 ? '🛡️ Allocating Token...' :
-                         '✅ Mirror Server Ready!'}
-                      </span>
-                    </div>
-                    <span className="text-[10px] font-mono text-amber-400 font-bold shrink-0">{countdownSeconds}s</span>
-                  </div>
-                  <div className="w-full bg-[#121A26] rounded-full h-2 overflow-hidden border border-[#2B3E55]">
-                    <div 
-                      className="h-full bg-gradient-to-r from-amber-500 via-[#D9A45B] to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(217,164,91,0.8)]"
-                      style={{ width: `${((4 - countdownSeconds) / 3) * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] text-center text-slate-400 font-mono animate-pulse">
-                    ⏳ Verifying 480p mirror in {countdownSeconds}s...
-                  </p>
-                </div>
-              ) : selectedQuality === '480p' && gatewayStage === 'proceed_btn' ? (
-                <div className="pt-2 space-y-2 animate-fadeIn">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono w-full justify-center">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>480p Mirror Ready!</span>
-                  </div>
-                  <button 
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProceedClick();
-                    }}
-                    className={`w-full py-2.5 px-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer ${
-                      proceedClickedOnce
-                        ? 'bg-amber-400 text-black ring-2 ring-amber-400 animate-pulse'
-                        : 'bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black'
-                    }`}
-                  >
-                    <span>{proceedClickedOnce ? '⚡ Click Again' : '🚀 Proceed to Link →'}</span>
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  type="button"
-                  onClick={() => handleQualityClick('480p')}
-                  className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    qualityClickedOnce === '480p'
-                      ? 'bg-amber-400 text-black shadow-lg animate-bounce'
-                      : 'bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black'
+              return (
+                <div
+                  key={q.id}
+                  onClick={() => {
+                    if (!isCountdown && !isProceed) {
+                      handleQualityClick(q.id);
+                    }
+                  }}
+                  className={`p-4 rounded-2xl border transition-all text-left space-y-2 relative group ${
+                    isCountdown || isProceed
+                      ? 'bg-[#15202E] border-emerald-400/80 shadow-2xl ring-2 ring-emerald-500/30'
+                      : isSelected && gatewayStage !== 'idle'
+                      ? 'bg-[#182436] border-[#D9A45B] shadow-xl cursor-pointer'
+                      : 'bg-[#0B1019] border-[#223145] hover:border-[#D9A45B]/80 hover:bg-[#121A26] cursor-pointer'
                   }`}
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{qualityClickedOnce === '480p' ? '⚡ Click Again (Start 3s)' : 'Download 480p'}</span>
-                </button>
-              )}
-            </div>
-
-            {/* 720p Option */}
-            <div 
-              onClick={() => {
-                if (gatewayStage === 'idle' || selectedQuality !== '720p') {
-                  handleQualityClick('720p');
-                }
-              }}
-              className={`p-4 rounded-2xl border transition-all text-left space-y-2 relative group ${
-                selectedQuality === '720p' && (gatewayStage === 'countdown_3s' || gatewayStage === 'proceed_btn')
-                  ? 'bg-[#15202E] border-emerald-400/80 shadow-2xl ring-2 ring-emerald-500/30'
-                  : qualityClickedOnce === '720p'
-                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse cursor-pointer'
-                  : selectedQuality === '720p' && gatewayStage !== 'idle'
-                  ? 'bg-[#182436] border-[#D9A45B] shadow-xl cursor-pointer'
-                  : 'bg-[#0B1019] border-[#223145] hover:border-[#D9A45B]/80 hover:bg-[#121A26] cursor-pointer'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-extrabold text-sm text-sky-400 group-hover:text-[#D9A45B]">720p HD</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#182333] text-slate-300">~950 MB</span>
-              </div>
-              <p className="text-[11px] text-slate-400">Standard HD • Clear Audio & Video</p>
-
-              {/* INLINE 3-SECOND LOADING FOR 720p */}
-              {selectedQuality === '720p' && gatewayStage === 'countdown_3s' ? (
-                <div className="pt-2 pb-1 space-y-2.5 animate-fadeIn">
-                  <div className="flex items-center justify-between px-2.5 py-1.5 bg-black/60 rounded-xl border border-amber-500/40">
-                    <div className="flex items-center gap-2">
-                      <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/20 text-[#D9A45B] font-mono font-black text-sm border border-amber-400 shrink-0">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-40"></span>
-                        <span>{countdownSeconds}</span>
-                      </div>
-                      <span className="text-[11px] font-bold text-amber-300 truncate">
-                        {countdownSeconds === 3 ? '⚡ Connecting Node...' :
-                         countdownSeconds === 2 ? '🛡️ Allocating Token...' :
-                         '✅ Mirror Server Ready!'}
-                      </span>
+                  {q.popular && (
+                    <div className="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-[#D9A45B] text-black text-[9px] font-black uppercase tracking-wider shadow">
+                      Most Popular
                     </div>
-                    <span className="text-[10px] font-mono text-amber-400 font-bold shrink-0">{countdownSeconds}s</span>
+                  )}
+                  <div className="flex items-center justify-between">
+                    <span className={`font-extrabold text-sm ${q.color}`}>{q.name}</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#182333] text-slate-300">{q.size}</span>
                   </div>
-                  <div className="w-full bg-[#121A26] rounded-full h-2 overflow-hidden border border-[#2B3E55]">
-                    <div 
-                      className="h-full bg-gradient-to-r from-amber-500 via-[#D9A45B] to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(217,164,91,0.8)]"
-                      style={{ width: `${((4 - countdownSeconds) / 3) * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] text-center text-slate-400 font-mono animate-pulse">
-                    ⏳ Verifying 720p mirror in {countdownSeconds}s...
-                  </p>
-                </div>
-              ) : selectedQuality === '720p' && gatewayStage === 'proceed_btn' ? (
-                <div className="pt-2 space-y-2 animate-fadeIn">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono w-full justify-center">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>720p Mirror Ready!</span>
-                  </div>
-                  <button 
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProceedClick();
-                    }}
-                    className={`w-full py-2.5 px-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer ${
-                      proceedClickedOnce
-                        ? 'bg-amber-400 text-black ring-2 ring-amber-400 animate-pulse'
-                        : 'bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black'
-                    }`}
-                  >
-                    <span>{proceedClickedOnce ? '⚡ Click Again' : '🚀 Proceed to Link →'}</span>
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  type="button"
-                  onClick={() => handleQualityClick('720p')}
-                  className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    qualityClickedOnce === '720p'
-                      ? 'bg-amber-400 text-black shadow-lg animate-bounce'
-                      : 'bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black'
-                  }`}
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{qualityClickedOnce === '720p' ? '⚡ Click Again (Start 3s)' : 'Download 720p'}</span>
-                </button>
-              )}
-            </div>
+                  <p className="text-[11px] text-slate-400">{q.desc}</p>
 
-            {/* 1080p Option (POPULAR) */}
-            <div 
-              onClick={() => {
-                if (gatewayStage === 'idle' || selectedQuality !== '1080p') {
-                  handleQualityClick('1080p');
-                }
-              }}
-              className={`p-4 rounded-2xl border transition-all text-left space-y-2 relative group ${
-                selectedQuality === '1080p' && (gatewayStage === 'countdown_3s' || gatewayStage === 'proceed_btn')
-                  ? 'bg-[#15202E] border-emerald-400/80 shadow-2xl ring-2 ring-emerald-500/30'
-                  : qualityClickedOnce === '1080p'
-                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse cursor-pointer'
-                  : selectedQuality === '1080p' && gatewayStage !== 'idle'
-                  ? 'bg-[#182436] border-[#D9A45B] shadow-xl ring-2 ring-[#D9A45B]/30 cursor-pointer'
-                  : 'bg-[#0B1019] border-[#2E4158] hover:border-[#D9A45B] hover:bg-[#121A26] cursor-pointer'
-              }`}
-            >
-              <div className="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-[#D9A45B] text-black text-[9px] font-black uppercase tracking-wider shadow">
-                Most Popular
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-extrabold text-sm text-[#D9A45B]">1080p FHD</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#182333] text-slate-300">~1.8 GB</span>
-              </div>
-              <p className="text-[11px] text-slate-400">Full HD 1080p • 5.1 Surround</p>
-
-              {/* INLINE 3-SECOND LOADING FOR 1080p */}
-              {selectedQuality === '1080p' && gatewayStage === 'countdown_3s' ? (
-                <div className="pt-2 pb-1 space-y-2.5 animate-fadeIn">
-                  <div className="flex items-center justify-between px-2.5 py-1.5 bg-black/60 rounded-xl border border-amber-500/40">
-                    <div className="flex items-center gap-2">
-                      <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/20 text-[#D9A45B] font-mono font-black text-sm border border-amber-400 shrink-0">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-40"></span>
-                        <span>{countdownSeconds}</span>
+                  {/* 3-SECOND LOADING DIRECTLY UNDER THIS BUTTON */}
+                  {isCountdown ? (
+                    <div className="pt-2 pb-1 space-y-2.5 animate-fadeIn">
+                      <div className="flex items-center justify-between px-2.5 py-1.5 bg-black/60 rounded-xl border border-amber-500/40">
+                        <div className="flex items-center gap-2">
+                          <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/20 text-[#D9A45B] font-mono font-black text-sm border border-amber-400 shrink-0">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-40"></span>
+                            <span>{countdownSeconds}</span>
+                          </div>
+                          <span className="text-[11px] font-bold text-amber-300 truncate">
+                            {countdownSeconds === 3 ? '⚡ Connecting Server...' :
+                             countdownSeconds === 2 ? '🛡️ Allocating Token...' :
+                             '✅ Mirror Server Ready!'}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-mono text-amber-400 font-bold shrink-0">{countdownSeconds}s</span>
                       </div>
-                      <span className="text-[11px] font-bold text-amber-300 truncate">
-                        {countdownSeconds === 3 ? '⚡ Connecting Node...' :
-                         countdownSeconds === 2 ? '🛡️ Allocating Token...' :
-                         '✅ Mirror Server Ready!'}
-                      </span>
-                    </div>
-                    <span className="text-[10px] font-mono text-amber-400 font-bold shrink-0">{countdownSeconds}s</span>
-                  </div>
-                  <div className="w-full bg-[#121A26] rounded-full h-2 overflow-hidden border border-[#2B3E55]">
-                    <div 
-                      className="h-full bg-gradient-to-r from-amber-500 via-[#D9A45B] to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(217,164,91,0.8)]"
-                      style={{ width: `${((4 - countdownSeconds) / 3) * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] text-center text-slate-400 font-mono animate-pulse">
-                    ⏳ Verifying 1080p mirror in {countdownSeconds}s...
-                  </p>
-                </div>
-              ) : selectedQuality === '1080p' && gatewayStage === 'proceed_btn' ? (
-                <div className="pt-2 space-y-2 animate-fadeIn">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono w-full justify-center">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>1080p Mirror Ready!</span>
-                  </div>
-                  <button 
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProceedClick();
-                    }}
-                    className={`w-full py-2.5 px-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer ${
-                      proceedClickedOnce
-                        ? 'bg-amber-400 text-black ring-2 ring-amber-400 animate-pulse'
-                        : 'bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black'
-                    }`}
-                  >
-                    <span>{proceedClickedOnce ? '⚡ Click Again' : '🚀 Proceed to Link →'}</span>
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  type="button"
-                  onClick={() => handleQualityClick('1080p')}
-                  className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow cursor-pointer ${
-                    qualityClickedOnce === '1080p'
-                      ? 'bg-amber-400 text-black shadow-lg animate-bounce'
-                      : 'bg-[#D9A45B] hover:bg-[#E5B573] text-black'
-                  }`}
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{qualityClickedOnce === '1080p' ? '⚡ Click Again (Start 3s)' : 'Download 1080p'}</span>
-                </button>
-              )}
-            </div>
-
-            {/* 4K UHD Option */}
-            <div 
-              onClick={() => {
-                if (gatewayStage === 'idle' || selectedQuality !== '4k') {
-                  handleQualityClick('4k');
-                }
-              }}
-              className={`p-4 rounded-2xl border transition-all text-left space-y-2 relative group ${
-                selectedQuality === '4k' && (gatewayStage === 'countdown_3s' || gatewayStage === 'proceed_btn')
-                  ? 'bg-[#15202E] border-emerald-400/80 shadow-2xl ring-2 ring-emerald-500/30'
-                  : qualityClickedOnce === '4k'
-                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse cursor-pointer'
-                  : selectedQuality === '4k' && gatewayStage !== 'idle'
-                  ? 'bg-[#182436] border-amber-400 shadow-xl cursor-pointer'
-                  : 'bg-[#0B1019] border-[#223145] hover:border-amber-400 hover:bg-[#121A26] cursor-pointer'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-extrabold text-sm text-amber-400">4K UHD</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#182333] text-slate-300">~5.5 GB</span>
-              </div>
-              <p className="text-[11px] text-slate-400">Ultra High Bitrate • 2160p Cinema</p>
-
-              {/* INLINE 3-SECOND LOADING FOR 4K */}
-              {selectedQuality === '4k' && gatewayStage === 'countdown_3s' ? (
-                <div className="pt-2 pb-1 space-y-2.5 animate-fadeIn">
-                  <div className="flex items-center justify-between px-2.5 py-1.5 bg-black/60 rounded-xl border border-amber-500/40">
-                    <div className="flex items-center gap-2">
-                      <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/20 text-[#D9A45B] font-mono font-black text-sm border border-amber-400 shrink-0">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-40"></span>
-                        <span>{countdownSeconds}</span>
+                      <div className="w-full bg-[#121A26] rounded-full h-2 overflow-hidden border border-[#2B3E55]">
+                        <div 
+                          className="h-full bg-gradient-to-r from-amber-500 via-[#D9A45B] to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(217,164,91,0.8)]"
+                          style={{ width: `${((4 - countdownSeconds) / 3) * 100}%` }}
+                        />
                       </div>
-                      <span className="text-[11px] font-bold text-amber-300 truncate">
-                        {countdownSeconds === 3 ? '⚡ Connecting Node...' :
-                         countdownSeconds === 2 ? '🛡️ Allocating Token...' :
-                         '✅ Mirror Server Ready!'}
-                      </span>
+                      <p className="text-[10px] text-center text-slate-400 font-mono animate-pulse">
+                        Verifying {q.name} download in {countdownSeconds}s...
+                      </p>
                     </div>
-                    <span className="text-[10px] font-mono text-amber-400 font-bold shrink-0">{countdownSeconds}s</span>
-                  </div>
-                  <div className="w-full bg-[#121A26] rounded-full h-2 overflow-hidden border border-[#2B3E55]">
-                    <div 
-                      className="h-full bg-gradient-to-r from-amber-500 via-[#D9A45B] to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(217,164,91,0.8)]"
-                      style={{ width: `${((4 - countdownSeconds) / 3) * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] text-center text-slate-400 font-mono animate-pulse">
-                    ⏳ Verifying 4K mirror in {countdownSeconds}s...
-                  </p>
+                  ) : isProceed ? (
+                    <div className="pt-2 space-y-2 animate-fadeIn">
+                      <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono w-full justify-center">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>{q.name} Ready!</span>
+                      </div>
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleProceedClick();
+                        }}
+                        className="w-full py-2.5 px-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black hover:scale-102"
+                      >
+                        <span>🚀 Click to Proceed ({q.name}) →</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <button 
+                      type="button"
+                      onClick={() => handleQualityClick(q.id)}
+                      className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        q.popular
+                          ? 'bg-[#D9A45B] hover:bg-[#E5B573] text-black shadow'
+                          : 'bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black'
+                      }`}
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download {q.name}</span>
+                    </button>
+                  )}
                 </div>
-              ) : selectedQuality === '4k' && gatewayStage === 'proceed_btn' ? (
-                <div className="pt-2 space-y-2 animate-fadeIn">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono w-full justify-center">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>4K Mirror Ready!</span>
-                  </div>
-                  <button 
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProceedClick();
-                    }}
-                    className={`w-full py-2.5 px-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer ${
-                      proceedClickedOnce
-                        ? 'bg-amber-400 text-black ring-2 ring-amber-400 animate-pulse'
-                        : 'bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black'
-                    }`}
-                  >
-                    <span>{proceedClickedOnce ? '⚡ Click Again' : '🚀 Proceed to Link →'}</span>
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  type="button"
-                  onClick={() => handleQualityClick('4k')}
-                  className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    qualityClickedOnce === '4k'
-                      ? 'bg-amber-400 text-black shadow-lg animate-bounce'
-                      : 'bg-[#1B2738] group-hover:bg-amber-400 text-slate-200 group-hover:text-black'
-                  }`}
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{qualityClickedOnce === '4k' ? '⚡ Click Again (Start 3s)' : 'Download 4K'}</span>
-                </button>
-              )}
-            </div>
+              );
+            })}
           </div>
 
           {/* ======================================================================= */}
@@ -720,14 +436,10 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
 
                   <button
                     onClick={handleGenerateLinkClick}
-                    className={`w-full py-4 font-black text-sm uppercase tracking-widest rounded-xl shadow-2xl transition-all hover:scale-102 cursor-pointer flex items-center justify-center gap-2 ${
-                      generateClickedOnce
-                        ? 'bg-amber-400 text-black shadow-amber-400/40 ring-2 ring-amber-400 animate-pulse'
-                        : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black'
-                    }`}
+                    className="w-full py-4 font-black text-sm uppercase tracking-widest rounded-xl shadow-2xl transition-all hover:scale-102 cursor-pointer flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black"
                   >
                     <Zap className="w-5 h-5 fill-black" />
-                    <span>{generateClickedOnce ? '⚡ Click Again to Generate Direct Token' : '⚡ GENERATE HIGH-SPEED DOWNLOAD LINK'}</span>
+                    <span>⚡ GENERATE HIGH-SPEED DOWNLOAD LINK</span>
                   </button>
                   <p className="text-[11px] text-slate-400">Click the button above to generate your direct CDN link</p>
                 </div>
