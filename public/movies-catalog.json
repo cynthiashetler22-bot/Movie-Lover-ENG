@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-02T11:06:32.970Z",
+  "lastSyncedAt": "2026-10-02T11:06:36.729Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -121,24 +121,28 @@
       "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
     },
     {
-      "title": "hryherye",
+      "title": "The Odyssey 2026",
       "genre": "Drama",
       "secondaryGenre": "Festival Choice",
       "year": 2025,
-      "duration": "118 min",
-      "director": "",
-      "shortDesc": "",
-      "synopsis": "",
+      "duration": "2h 18 min",
+      "director": "Curated Selection",
+      "shortDesc": "High quality cinematic presentation in dual audio format.",
+      "synopsis": "Presented in crystal clear sound and high-definition video.",
       "editorialNote": "Curator selection for international cinephiles.",
       "mood": "Gripping & Poetic",
       "accentHue": "#D9A45B",
-      "posterUrl": "",
+      "posterUrl": "https://i.postimg.cc/c4fjqcBR/the-odyssey-poster-2-4k-2026-by-mrandrew7w7-dm697ip-fullview.jpg",
       "ratingScore": "8.8",
       "id": "custom-film-1790614477167",
-      "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
-      "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink720p": "https://www.mediafire.com/file/asvcc8bgh4q18ms/Mohabbatein.2000.BluR%25C3%25A3y.720p_%255B%25C3%259FioskopKaca21.com%255D.mkv/file#720p",
+      "downloadLink1080p": "https://www.mediafire.com/file/asvcc8bgh4q18ms/Mohabbatein.2000.BluR%25C3%25A3y.720p_%255B%25C3%259FioskopKaca21.com%255D.mkv/file#1080p",
+      "downloadLink4k": "https://www.mediafire.com/file/asvcc8bgh4q18ms/Mohabbatein.2000.BluR%25C3%25A3y.720p_%255B%25C3%259FioskopKaca21.com%255D.mkv/file#4k",
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "editorialPick": true,
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-last-promise",
