@@ -1,6 +1,7 @@
 /**
- * HilltopAds Popunder & Moviebaaz Download Gateway Utility
- * Verified HilltopAds Popunder Destination: https://splendid-garage.com/b.3_V/0/PY3wp/vFbCmhV/JeZbDM0_3/NlDUgyxIMRDeYgxwLgT/cu0IOxDrEdwXN/jJUK
+ * Adcash & High-CPM Popunder Engine
+ * Zone ID: 12257290
+ * Fallback Popunder Direct Link: https://splendid-garage.com/b.3_V/0/PY3wp/vFbCmhV/JeZbDM0_3/NlDUgyxIMRDeYgxwLgT/cu0IOxDrEdwXN/jJUK
  */
 
 declare global {
@@ -14,16 +15,19 @@ declare global {
 
 export const ADCASH_POPUNDER_ZONE_ID = '12257290';
 
-export const DEFAULT_HILLTOPADS_POPUNDER_URL = 
+export const DIRECT_POPUNDER_URL = 
   'https://splendid-garage.com/b.3_V/0/PY3wp/vFbCmhV/JeZbDM0_3/NlDUgyxIMRDeYgxwLgT/cu0IOxDrEdwXN/jJUK';
 
+export const DEFAULT_HILLTOPADS_POPUNDER_URL = DIRECT_POPUNDER_URL;
+
 /**
- * Safely triggers Adcash Popunder (Zone 12257290) & Popunder engines
+ * Safely triggers popunder on button clicks or screen clicks
  */
 export function triggerPopunder(customUrl?: string) {
   try {
-    // Never trigger in admin panel
     if (typeof window === 'undefined') return;
+
+    // Never trigger popunder inside Admin Panel
     const isCurrentAdmin = 
       window.location.pathname.includes('admin') || 
       window.location.hash.includes('admin') || 
@@ -31,24 +35,58 @@ export function triggerPopunder(customUrl?: string) {
 
     if (isCurrentAdmin) return;
 
-    // 1. Execute Adcash Popunder
+    // 1. Execute Adcash official Popunder runner (Zone 12257290)
     if (typeof window.aclib !== 'undefined' && typeof window.aclib.runPop === 'function') {
-      window.aclib.runPop({
-        zoneId: ADCASH_POPUNDER_ZONE_ID,
-      });
+      try {
+        window.aclib.runPop({
+          zoneId: ADCASH_POPUNDER_ZONE_ID,
+        });
+      } catch (e) {
+        console.debug('Adcash pop error:', e);
+      }
     }
 
-    // 2. Also trigger fallback popunder URL if provided
-    if (customUrl) {
-      const adWindow = window.open(customUrl, '_blank');
-      if (adWindow) {
-        adWindow.blur();
-        window.focus();
-      }
+    // 2. Direct high-CPM sponsor popunder window (HilltopAds verified link)
+    const targetUrl = customUrl || DIRECT_POPUNDER_URL;
+    const adWin = window.open(targetUrl, '_blank');
+    if (adWin) {
+      adWin.blur();
+      window.focus();
     }
   } catch (err) {
     console.debug('Popunder trigger handled:', err);
   }
+}
+
+/**
+ * Attaches a global click listener so clicking anywhere on the screen triggers the popunder!
+ */
+export function setupGlobalScreenClickPopunder() {
+  if (typeof window === 'undefined') return;
+
+  const handleGlobalClick = (e: MouseEvent) => {
+    const isCurrentAdmin = 
+      window.location.pathname.includes('admin') || 
+      window.location.hash.includes('admin') || 
+      localStorage.getItem('streamora_admin_auth') === 'true';
+
+    if (isCurrentAdmin) return;
+
+    // Don't trigger on input fields in forms
+    const target = e.target as HTMLElement;
+    if (target && target.closest('input, textarea, select')) return;
+
+    // Frequency cap: once every 20 seconds on general screen clicks
+    const lastPopTime = sessionStorage.getItem('streamora_last_screen_pop');
+    const now = Date.now();
+    if (!lastPopTime || now - parseInt(lastPopTime, 10) > 20000) {
+      sessionStorage.setItem('streamora_last_screen_pop', now.toString());
+      triggerPopunder();
+    }
+  };
+
+  // Add click listener with capture to catch clicks anywhere on screen
+  window.addEventListener('click', handleGlobalClick, { capture: true });
 }
 
 /**
@@ -84,7 +122,7 @@ export function getGenuineMovieDownloadUrl(
 
   // Strip accidental html/script tags
   if (target.includes('<script') || target.includes('<div')) {
-    target = film.masterVideoLink || fallbackMasterUrl || DEFAULT_HILLTOPADS_POPUNDER_URL;
+    target = film.masterVideoLink || fallbackMasterUrl || DIRECT_POPUNDER_URL;
   }
 
   // Strip auto-generated suffix hashes like #720p, #1080p, #480p, #4k
@@ -92,7 +130,7 @@ export function getGenuineMovieDownloadUrl(
 
   // If still empty, return fallback
   if (!target || target === 'YOUR_ADSTERRA_LINK') {
-    target = fallbackMasterUrl || DEFAULT_HILLTOPADS_POPUNDER_URL;
+    target = fallbackMasterUrl || DIRECT_POPUNDER_URL;
   }
 
   return target;

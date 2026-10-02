@@ -50,21 +50,27 @@
     <!-- Adcash Core Library & High-CPM Popunder Integration (Protected: Never run inside Admin panel) -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
-      try {
-        var isAdmin = window.location.pathname.includes('admin') || window.location.hash.includes('admin') || localStorage.getItem('streamora_admin_auth') === 'true';
-        if (!isAdmin && typeof aclib !== 'undefined') {
-          if (typeof aclib.runPop === 'function') {
-            aclib.runPop({
-              zoneId: '12257290',
-            });
-          }
-          if (typeof aclib.runAutoTag === 'function') {
-            aclib.runAutoTag({
-              zoneId: 'ikiz4oo0ul',
-            });
-          }
+      (function() {
+        function runAdcash() {
+          try {
+            var isAdmin = window.location.pathname.includes('admin') || window.location.hash.includes('admin') || localStorage.getItem('streamora_admin_auth') === 'true';
+            if (isAdmin) return;
+            if (typeof window.aclib !== 'undefined' && typeof window.aclib.runPop === 'function') {
+              window.aclib.runPop({
+                zoneId: '12257290',
+              });
+            }
+          } catch(e) {}
         }
-      } catch(e) {}
+
+        var s = document.getElementById('aclib');
+        if (s) {
+          s.addEventListener('load', runAdcash);
+        }
+        window.addEventListener('DOMContentLoaded', runAdcash);
+        window.addEventListener('load', runAdcash);
+        runAdcash();
+      })();
     </script>
   </body>
 </html>

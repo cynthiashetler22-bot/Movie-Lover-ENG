@@ -7,11 +7,12 @@ import { AdBannerSlot } from './components/AdBannerSlot';
 import { GlobalAdScriptInjector } from './components/GlobalAdScriptInjector';
 import { Footer } from './components/Footer';
 import { MovieDetailPage } from './components/MovieDetailPage';
+import { FloatingCenterAd } from './components/FloatingCenterAd';
 import { PolicyModal } from './components/PolicyModal';
 import { AdminPortalSite } from './components/AdminPortalSite';
 import { FilmItem } from './data/films';
 import { CheckCircle2 } from 'lucide-react';
-import { triggerPopunder } from './utils/popunder';
+import { triggerPopunder, setupGlobalScreenClickPopunder } from './utils/popunder';
 
 function AppRouter() {
   const { isAdminOpen, saveChangesNotification } = useAdmin();
@@ -78,6 +79,11 @@ function MainAppContent() {
       window.removeEventListener('popstate', handleHashCheck);
     };
   }, [movies]);
+
+  // Global screen click popunder setup
+  useEffect(() => {
+    setupGlobalScreenClickPopunder();
+  }, []);
 
   const handleSelectFilm = (film: FilmItem) => {
     triggerPopunder();
@@ -173,6 +179,9 @@ function MainAppContent() {
 
       {/* 6. CLEAN MODERN FOOTER */}
       <Footer onOpenPolicy={setPolicyType} />
+
+      {/* Floating Center / Bottom Cinema Ad (High-CPM Pop-Up) */}
+      <FloatingCenterAd />
 
       {/* Policy & Legal Disclosure Placeholder Modal */}
       <PolicyModal
