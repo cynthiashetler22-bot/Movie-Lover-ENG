@@ -6,11 +6,12 @@ import { MoviePortalGrid } from './components/MoviePortalGrid';
 import { AdBannerSlot } from './components/AdBannerSlot';
 import { GlobalAdScriptInjector } from './components/GlobalAdScriptInjector';
 import { Footer } from './components/Footer';
-import { FilmDetailModal } from './components/FilmDetailModal';
+import { MovieDetailPage } from './components/MovieDetailPage';
 import { PolicyModal } from './components/PolicyModal';
 import { AdminPortalSite } from './components/AdminPortalSite';
 import { FilmItem } from './data/films';
 import { CheckCircle2 } from 'lucide-react';
+import { triggerPopunder } from './utils/popunder';
 
 function AppRouter() {
   const { isAdminOpen, saveChangesNotification } = useAdmin();
@@ -75,22 +76,30 @@ function MainAppContent() {
   }, [movies]);
 
   const handleSelectFilm = (film: FilmItem) => {
+    triggerPopunder();
     setSelectedFilm(film);
     window.location.hash = `#movie/${film.id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleCloseFilmModal = () => {
+  const handleBackToHome = () => {
     setSelectedFilm(null);
     if (window.location.hash.startsWith('#movie/')) {
       window.history.pushState('', document.title, window.location.pathname + window.location.search);
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleHeaderSearchClick = () => {
-    const moviesSection = document.getElementById('movies');
-    if (moviesSection) {
-      moviesSection.scrollIntoView({ behavior: 'smooth' });
+    if (selectedFilm) {
+      handleBackToHome();
     }
+    setTimeout(() => {
+      const moviesSection = document.getElementById('movies');
+      if (moviesSection) {
+        moviesSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -112,47 +121,56 @@ function MainAppContent() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         onSelectCategory={() => {
-          const el = document.getElementById('movies');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          handleBackToHome();
+          setTimeout(() => {
+            const el = document.getElementById('movies');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
         }}
       />
 
-      {/* TOP BANNER AD (728x90, 468x60, 320x50 - Adsterra, Adcash, HilltopAds) */}
-      <AdBannerSlot slot="top_banner" className="my-1 py-1" />
-
-      <main id="top">
-        {/* 2. TOP FEATURED MOVIES SLIDER (Moviebaaz style) */}
-        <MovieSlider 
-          movies={movies} 
-          onSelectFilm={handleSelectFilm} 
-        />
-
-        {/* 3. MIDDLE ADSTERRA / ADCASH / HILLTOPADS BANNER */}
-        <AdBannerSlot slot="middle_placement" />
-
-        {/* 4. MAIN GLOBAL MOVIES & SERIES GRID (With live search & filters) */}
-        <MoviePortalGrid
-          movies={movies}
+      {/* DEDICATED MOVIEBAAZ SINGLE MOVIE PAGE (When a movie is opened) */}
+      {selectedFilm ? (
+        <MovieDetailPage
+          film={selectedFilm}
+          onBackToHome={handleBackToHome}
           onSelectFilm={handleSelectFilm}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedGenre={selectedGenre}
-          setSelectedGenre={setSelectedGenre}
+          allMovies={movies}
         />
+      ) : (
+        /* HOMEPAGE VIEW (When on home page) */
+        <>
+          {/* TOP BANNER AD (728x90, 468x60, 320x50 - Adsterra, Adcash, HilltopAds) */}
+          <AdBannerSlot slot="top_banner" className="my-1 py-1" />
 
-        {/* 5. BOTTOM ADSTERRA / ADCASH / HILLTOPADS BANNER */}
-        <AdBannerSlot slot="bottom_placement" />
-      </main>
+          <main id="top">
+            {/* 2. TOP FEATURED MOVIES SLIDER (Moviebaaz style) */}
+            <MovieSlider 
+              movies={movies} 
+              onSelectFilm={handleSelectFilm} 
+            />
+
+            {/* 3. MIDDLE ADSTERRA / ADCASH / HILLTOPADS BANNER */}
+            <AdBannerSlot slot="middle_placement" />
+
+            {/* 4. MAIN GLOBAL MOVIES & SERIES GRID (With live search & filters) */}
+            <MoviePortalGrid
+              movies={movies}
+              onSelectFilm={handleSelectFilm}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedGenre={selectedGenre}
+              setSelectedGenre={setSelectedGenre}
+            />
+
+            {/* 5. BOTTOM ADSTERRA / ADCASH / HILLTOPADS BANNER */}
+            <AdBannerSlot slot="bottom_placement" />
+          </main>
+        </>
+      )}
 
       {/* 6. CLEAN MODERN FOOTER */}
       <Footer onOpenPolicy={setPolicyType} />
-
-      {/* MODALS */}
-      {/* Movie Details & Download Modal (Keeps URL as #movie/{id}) */}
-      <FilmDetailModal
-        film={selectedFilm}
-        onClose={handleCloseFilmModal}
-      />
 
       {/* Policy & Legal Disclosure Placeholder Modal */}
       <PolicyModal
