@@ -43,11 +43,19 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
   const [countdownSeconds, setCountdownSeconds] = useState(3);
   const downloadSectionRef = useRef<HTMLDivElement>(null);
 
+  // Track 2-click popunder sequence
+  const [qualityClickedOnce, setQualityClickedOnce] = useState<string | null>(null);
+  const [proceedClickedOnce, setProceedClickedOnce] = useState(false);
+  const [generateClickedOnce, setGenerateClickedOnce] = useState(false);
+
   // Scroll to top when film changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setGatewayStage('idle');
     setCountdownSeconds(3);
+    setQualityClickedOnce(null);
+    setProceedClickedOnce(false);
+    setGenerateClickedOnce(false);
   }, [film]);
 
   // 3-Second Countdown Timer Handler
@@ -79,10 +87,16 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
   // STEP 1: User clicks on any quality download button (e.g. 1080p)
   const handleQualityClick = (quality: '480p' | '720p' | '1080p' | '4k') => {
     setSelectedQuality(quality);
-    // 1st Popunder trigger
-    triggerPopunder();
-    
-    // Start 3-second countdown
+
+    // 1st click: trigger Adcash popunder
+    if (qualityClickedOnce !== quality) {
+      triggerPopunder();
+      setQualityClickedOnce(quality);
+      return;
+    }
+
+    // 2nd click: start 3-second countdown
+    setQualityClickedOnce(null);
     setCountdownSeconds(3);
     setGatewayStage('countdown_3s');
 
@@ -94,19 +108,33 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
 
   // STEP 2: User clicks "Proceed to Fast Server" button after 3 seconds
   const handleProceedClick = () => {
-    // 2nd Popunder trigger
-    triggerPopunder();
+    // 1st click: trigger Adcash popunder
+    if (!proceedClickedOnce) {
+      triggerPopunder();
+      setProceedClickedOnce(true);
+      return;
+    }
+
+    // 2nd click: transition to generate link view
+    setProceedClickedOnce(false);
     setGatewayStage('generate_view');
   };
 
   // STEP 3: User clicks "Generate Download Link" button
   const handleGenerateLinkClick = () => {
-    // 3rd Popunder trigger
-    triggerPopunder();
+    // 1st click: trigger Adcash popunder
+    if (!generateClickedOnce) {
+      triggerPopunder();
+      setGenerateClickedOnce(true);
+      return;
+    }
+
+    // 2nd click: generate token
+    setGenerateClickedOnce(false);
     setGatewayStage('generating_token');
   };
 
-  // STEP 4: User clicks final "DOWNLOAD FILE NOW" button -> DELIVERS REAL MOVIE FILE!
+  // STEP 4: Real movie URL
   const realDownloadUrl = getGenuineMovieDownloadUrl(film, selectedQuality, activeAdsterraLink);
 
   // Handle Watch Online click
@@ -317,7 +345,9 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
             <div 
               onClick={() => handleQualityClick('480p')}
               className={`p-4 rounded-2xl border transition-all cursor-pointer text-left space-y-2 relative group ${
-                selectedQuality === '480p' && gatewayStage !== 'idle'
+                qualityClickedOnce === '480p'
+                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse'
+                  : selectedQuality === '480p' && gatewayStage !== 'idle'
                   ? 'bg-[#182436] border-[#D9A45B] shadow-xl'
                   : 'bg-[#0B1019] border-[#223145] hover:border-[#D9A45B]/80 hover:bg-[#121A26]'
               }`}
@@ -329,10 +359,14 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
               <p className="text-[11px] text-slate-400">Mobile Quality • Low Data Usage</p>
               <button 
                 type="button"
-                className="w-full mt-2 py-2 bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5"
+                className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                  qualityClickedOnce === '480p'
+                    ? 'bg-amber-400 text-black shadow-lg animate-bounce'
+                    : 'bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black'
+                }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download 480p</span>
+                <span>{qualityClickedOnce === '480p' ? '⚡ Click Again (3s Load)' : 'Download 480p'}</span>
               </button>
             </div>
 
@@ -340,7 +374,9 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
             <div 
               onClick={() => handleQualityClick('720p')}
               className={`p-4 rounded-2xl border transition-all cursor-pointer text-left space-y-2 relative group ${
-                selectedQuality === '720p' && gatewayStage !== 'idle'
+                qualityClickedOnce === '720p'
+                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse'
+                  : selectedQuality === '720p' && gatewayStage !== 'idle'
                   ? 'bg-[#182436] border-[#D9A45B] shadow-xl'
                   : 'bg-[#0B1019] border-[#223145] hover:border-[#D9A45B]/80 hover:bg-[#121A26]'
               }`}
@@ -352,10 +388,14 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
               <p className="text-[11px] text-slate-400">Standard HD • Clear Audio & Video</p>
               <button 
                 type="button"
-                className="w-full mt-2 py-2 bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5"
+                className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                  qualityClickedOnce === '720p'
+                    ? 'bg-amber-400 text-black shadow-lg animate-bounce'
+                    : 'bg-[#1B2738] group-hover:bg-[#D9A45B] text-slate-200 group-hover:text-black'
+                }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download 720p</span>
+                <span>{qualityClickedOnce === '720p' ? '⚡ Click Again (3s Load)' : 'Download 720p'}</span>
               </button>
             </div>
 
@@ -363,7 +403,9 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
             <div 
               onClick={() => handleQualityClick('1080p')}
               className={`p-4 rounded-2xl border transition-all cursor-pointer text-left space-y-2 relative group ${
-                selectedQuality === '1080p' && gatewayStage !== 'idle'
+                qualityClickedOnce === '1080p'
+                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse'
+                  : selectedQuality === '1080p' && gatewayStage !== 'idle'
                   ? 'bg-[#182436] border-[#D9A45B] shadow-xl ring-2 ring-[#D9A45B]/30'
                   : 'bg-[#0B1019] border-[#2E4158] hover:border-[#D9A45B] hover:bg-[#121A26]'
               }`}
@@ -378,10 +420,14 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
               <p className="text-[11px] text-slate-400">Full HD 1080p • 5.1 Surround</p>
               <button 
                 type="button"
-                className="w-full mt-2 py-2 bg-[#D9A45B] hover:bg-[#E5B573] text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow"
+                className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow ${
+                  qualityClickedOnce === '1080p'
+                    ? 'bg-amber-400 text-black shadow-lg animate-bounce'
+                    : 'bg-[#D9A45B] hover:bg-[#E5B573] text-black'
+                }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download 1080p</span>
+                <span>{qualityClickedOnce === '1080p' ? '⚡ Click Again (3s Load)' : 'Download 1080p'}</span>
               </button>
             </div>
 
@@ -389,7 +435,9 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
             <div 
               onClick={() => handleQualityClick('4k')}
               className={`p-4 rounded-2xl border transition-all cursor-pointer text-left space-y-2 relative group ${
-                selectedQuality === '4k' && gatewayStage !== 'idle'
+                qualityClickedOnce === '4k'
+                  ? 'bg-[#1D293A] border-amber-400 shadow-xl ring-2 ring-amber-400/50 animate-pulse'
+                  : selectedQuality === '4k' && gatewayStage !== 'idle'
                   ? 'bg-[#182436] border-amber-400 shadow-xl'
                   : 'bg-[#0B1019] border-[#223145] hover:border-amber-400 hover:bg-[#121A26]'
               }`}
@@ -401,10 +449,14 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
               <p className="text-[11px] text-slate-400">Ultra High Bitrate • 2160p Cinema</p>
               <button 
                 type="button"
-                className="w-full mt-2 py-2 bg-[#1B2738] group-hover:bg-amber-400 text-slate-200 group-hover:text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5"
+                className={`w-full mt-2 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                  qualityClickedOnce === '4k'
+                    ? 'bg-amber-400 text-black shadow-lg animate-bounce'
+                    : 'bg-[#1B2738] group-hover:bg-amber-400 text-slate-200 group-hover:text-black'
+                }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download 4K</span>
+                <span>{qualityClickedOnce === '4k' ? '⚡ Click Again (3s Load)' : 'Download 4K'}</span>
               </button>
             </div>
           </div>
@@ -443,9 +495,13 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
 
                   <button
                     onClick={handleProceedClick}
-                    className="px-8 py-3.5 bg-gradient-to-r from-[#D9A45B] to-[#e4b878] hover:from-[#e4b878] hover:to-[#D9A45B] text-black font-black text-sm uppercase tracking-wider rounded-xl shadow-xl transition-transform hover:scale-105 cursor-pointer flex items-center justify-center gap-2 mx-auto"
+                    className={`px-8 py-3.5 font-black text-sm uppercase tracking-wider rounded-xl shadow-xl transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 mx-auto ${
+                      proceedClickedOnce
+                        ? 'bg-amber-400 text-black shadow-amber-400/30 ring-2 ring-amber-400 animate-pulse'
+                        : 'bg-gradient-to-r from-[#D9A45B] to-[#e4b878] hover:from-[#e4b878] hover:to-[#D9A45B] text-black'
+                    }`}
                   >
-                    <span>Click Here to Proceed to Download Page</span>
+                    <span>{proceedClickedOnce ? '⚡ Click Again to Open Download Link Page' : 'Click Here to Proceed to Download Page'}</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <p className="text-[11px] text-slate-500">Fast Cloud Mirror CDN • No registration required</p>
@@ -474,10 +530,14 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
 
                   <button
                     onClick={handleGenerateLinkClick}
-                    className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-black text-sm uppercase tracking-widest rounded-xl shadow-2xl transition-transform hover:scale-102 cursor-pointer flex items-center justify-center gap-2"
+                    className={`w-full py-4 font-black text-sm uppercase tracking-widest rounded-xl shadow-2xl transition-all hover:scale-102 cursor-pointer flex items-center justify-center gap-2 ${
+                      generateClickedOnce
+                        ? 'bg-amber-400 text-black shadow-amber-400/40 ring-2 ring-amber-400 animate-pulse'
+                        : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black'
+                    }`}
                   >
                     <Zap className="w-5 h-5 fill-black" />
-                    <span>⚡ GENERATE HIGH-SPEED DOWNLOAD LINK</span>
+                    <span>{generateClickedOnce ? '⚡ Click Again to Generate Direct Token' : '⚡ GENERATE HIGH-SPEED DOWNLOAD LINK'}</span>
                   </button>
                   <p className="text-[11px] text-slate-400">Click the button above to generate your direct CDN link</p>
                 </div>
@@ -496,7 +556,7 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
                 </div>
               )}
 
-              {/* STAGE 5: FINAL READY -> REAL FILE DOWNLOAD BUTTON */}
+              {/* STAGE 5: FINAL READY -> REAL FILE DOWNLOAD BUTTON (Raw URL is HIDDEN!) */}
               {gatewayStage === 'final_ready' && (
                 <div className="py-4 space-y-4 max-w-xl mx-auto">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-300 text-xs font-mono font-bold">
@@ -508,13 +568,12 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
                     Your {selectedQuality.toUpperCase()} File is Ready to Download
                   </h3>
 
-                  {/* GUARANTEED DIRECT ANCHOR LINK (Never blocked by popup blockers!) */}
+                  {/* GUARANTEED DIRECT ANCHOR LINK (Never blocked by popup blockers, raw URL hidden!) */}
                   <a
                     href={realDownloadUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => {
-                      // Trigger popunder in background after click
                       setTimeout(() => triggerPopunder(), 300);
                     }}
                     className="w-full py-4 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 hover:from-emerald-400 hover:to-teal-300 hover:scale-102 text-black font-black text-base uppercase tracking-wider rounded-2xl shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2.5 text-center"
@@ -523,28 +582,10 @@ export const MovieDetailPage: React.FC<MovieDetailPageProps> = ({
                     <span>🚀 DOWNLOAD FILE NOW ({selectedQuality.toUpperCase()})</span>
                   </a>
 
-                  {/* Server & Destination Box */}
-                  <div className="p-3.5 bg-[#0C121D] border border-emerald-500/30 rounded-xl text-left space-y-1.5 text-xs font-mono">
-                    <div className="flex items-center justify-between text-slate-400">
-                      <span>Cloud Server Provider:</span>
-                      <span className="text-emerald-400 font-bold">
-                        {realDownloadUrl.includes('mediafire.com') ? 'MediaFire Fast Cloud' :
-                         realDownloadUrl.includes('drive.google.com') ? 'Google Drive High-Speed' :
-                         realDownloadUrl.includes('mega.nz') ? 'Mega Cloud Storage' :
-                         'Verified High Speed Mirror'}
-                      </span>
-                    </div>
-                    <div className="text-[11px] text-slate-300 break-all">
-                      <span className="text-slate-400">Direct Link: </span>
-                      <a 
-                        href={realDownloadUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-[#D9A45B] hover:underline"
-                      >
-                        {realDownloadUrl}
-                      </a>
-                    </div>
+                  {/* Clean verified indicator (NO RAW URL SHOWN!) */}
+                  <div className="flex items-center justify-center gap-2 text-xs text-emerald-400 font-mono pt-1">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span>Fast High-Speed CDN Mirror • Direct File Delivery Ready</span>
                   </div>
 
                   <div className="text-[11px] text-slate-400 flex items-center justify-center gap-4 pt-1 font-mono">

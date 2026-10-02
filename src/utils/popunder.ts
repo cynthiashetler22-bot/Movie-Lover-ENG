@@ -3,11 +3,22 @@
  * Verified HilltopAds Popunder Destination: https://splendid-garage.com/b.3_V/0/PY3wp/vFbCmhV/JeZbDM0_3/NlDUgyxIMRDeYgxwLgT/cu0IOxDrEdwXN/jJUK
  */
 
+declare global {
+  interface Window {
+    aclib?: {
+      runPop?: (config: { zoneId: string }) => void;
+      runAutoTag?: (config: { zoneId: string }) => void;
+    };
+  }
+}
+
+export const ADCASH_POPUNDER_ZONE_ID = '12257290';
+
 export const DEFAULT_HILLTOPADS_POPUNDER_URL = 
   'https://splendid-garage.com/b.3_V/0/PY3wp/vFbCmhV/JeZbDM0_3/NlDUgyxIMRDeYgxwLgT/cu0IOxDrEdwXN/jJUK';
 
 /**
- * Safely triggers the HilltopAds popunder in a background/new window
+ * Safely triggers Adcash Popunder (Zone 12257290) & Popunder engines
  */
 export function triggerPopunder(customUrl?: string) {
   try {
@@ -20,13 +31,20 @@ export function triggerPopunder(customUrl?: string) {
 
     if (isCurrentAdmin) return;
 
-    const url = customUrl || DEFAULT_HILLTOPADS_POPUNDER_URL;
-    
-    // Open in background window / tab
-    const adWindow = window.open(url, '_blank');
-    if (adWindow) {
-      adWindow.blur();
-      window.focus();
+    // 1. Execute Adcash Popunder
+    if (typeof window.aclib !== 'undefined' && typeof window.aclib.runPop === 'function') {
+      window.aclib.runPop({
+        zoneId: ADCASH_POPUNDER_ZONE_ID,
+      });
+    }
+
+    // 2. Also trigger fallback popunder URL if provided
+    if (customUrl) {
+      const adWindow = window.open(customUrl, '_blank');
+      if (adWindow) {
+        adWindow.blur();
+        window.focus();
+      }
     }
   } catch (err) {
     console.debug('Popunder trigger handled:', err);
