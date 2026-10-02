@@ -7,6 +7,7 @@ import { AdBannerSlot } from './components/AdBannerSlot';
 import { GlobalAdScriptInjector } from './components/GlobalAdScriptInjector';
 import { Footer } from './components/Footer';
 import { MovieDetailPage } from './components/MovieDetailPage';
+import { MovieDownloadPage } from './components/MovieDownloadPage';
 import { FloatingCenterAd } from './components/FloatingCenterAd';
 import { PolicyModal } from './components/PolicyModal';
 import { AdminPortalSite } from './components/AdminPortalSite';
@@ -41,6 +42,10 @@ function MainAppContent() {
 
   // Modal & Selection States
   const [selectedFilm, setSelectedFilm] = useState<FilmItem | null>(null);
+  const [downloadTarget, setDownloadTarget] = useState<{
+    film: FilmItem;
+    quality: '480p' | '720p' | '1080p' | '4k';
+  } | null>(null);
   const [policyType, setPolicyType] = useState<'privacy' | 'terms' | 'contact' | null>(null);
 
   // Genre Filter & Search State
@@ -49,15 +54,29 @@ function MainAppContent() {
 
   /**
    * CRITICAL URL HASH ROUTING:
-   * Sync selected film with URL hash (e.g. #movie/cyber-odyssey)
-   * This guarantees that when a user is viewing a movie and hits Browser Refresh (F5),
-   * they STAY ON THAT MOVIE PAGE instead of going back to the home page!
+   * Syncs with #download/${movieId}/${quality} and #movie/${movieId}
+   * This guarantees that when a user is viewing a download page or movie and hits Browser Refresh (F5),
+   * they STAY ON THAT PAGE!
    */
   useEffect(() => {
     const handleHashCheck = () => {
       if (typeof window === 'undefined') return;
       const hash = window.location.hash;
-      if (hash.startsWith('#movie/')) {
+
+      if (hash.startsWith('#download/')) {
+        const parts = hash.replace('#download/', '').split('/');
+        const movieId = parts[0];
+        const qual = (parts[1] || '1080p') as '480p' | '720p' | '1080p' | '4k';
+        const targetFilm = movies.find((m) => m.id === movieId);
+        if (targetFilm) {
+          setDownloadTarget({ film: targetFilm, quality: qual });
+          setSelectedFilm(targetFilm);
+        } else {
+          setDownloadTarget(null);
+          setSelectedFilm(null);
+        }
+      } else if (hash.startsWith('#movie/')) {
+        setDownloadTarget(null);
         const movieId = hash.replace('#movie/', '');
         const targetFilm = movies.find((m) => m.id === movieId);
         if (targetFilm) {
@@ -66,6 +85,7 @@ function MainAppContent() {
           setSelectedFilm(null);
         }
       } else {
+        setDownloadTarget(null);
         setSelectedFilm(null);
       }
     };
@@ -87,19 +107,49 @@ function MainAppContent() {
 
   const handleSelectFilm = (film: FilmItem) => {
     triggerPopunder();
+    setDownloadTarget(null);
     setSelectedFilm(film);
     window.location.hash = `#movie/${film.id}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigateToDownload = (quality: '480p' | '720p' | '1080p' | '4k') => {
+    if (selectedFilm) {
+      setDownloadTarget({ film: selectedFilm, quality });
+      window.location.hash = `#download/${selectedFilm.id}/${quality}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleBackToMovie = () => {
+    if (downloadTarget) {
+      const film = downloadTarget.film;
+      setDownloadTarget(null);
+      setSelectedFilm(film);
+      window.location.hash = `#movie/${film.id}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      handleBackToHome();
+    }
+  };
+
+  const handleChangeDownloadQuality = (newQuality: '480p' | '720p' | '1080p' | '4k') => {
+    if (downloadTarget) {
+      setDownloadTarget({ ...downloadTarget, quality: newQuality });
+      window.location.hash = `#download/${downloadTarget.film.id}/${newQuality}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const handleBackToHome = () => {
+    setDownloadTarget(null);
     setSelectedFilm(null);
     window.location.hash = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleHeaderSearchClick = () => {
-    if (selectedFilm) {
+    if (selectedFilm || downloadTarget) {
       handleBackToHome();
     }
     setTimeout(() => {
@@ -137,12 +187,20 @@ function MainAppContent() {
         }}
       />
 
-      {/* DEDICATED MOVIEBAAZ SINGLE MOVIE PAGE (When a movie is opened) */}
-      {selectedFilm ? (
+      {/* DEDICATED MOVIEBAAZ DOWNLOAD PAGE vs SINGLE MOVIE PAGE vs HOMEPAGE */}
+      {downloadTarget ? (
+        <MovieDownloadPage
+          film={downloadTarget.film}
+          quality={downloadTarget.quality}
+          onBackToMovie={handleBackToMovie}
+          onChangeQuality={handleChangeDownloadQuality}
+        />
+      ) : selectedFilm ? (
         <MovieDetailPage
           film={selectedFilm}
           onBackToHome={handleBackToHome}
           onSelectFilm={handleSelectFilm}
+          onNavigateToDownload={handleNavigateToDownload}
           allMovies={movies}
         />
       ) : (
