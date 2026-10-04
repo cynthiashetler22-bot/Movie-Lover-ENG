@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-04T14:38:31.473Z",
+  "lastSyncedAt": "2026-10-04T14:39:23.629Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -69,6 +69,28 @@
     }
   ],
   "movies": [
+    {
+      "title": "Hope (2026)",
+      "genre": "Action",
+      "year": 2026,
+      "duration": "115 min",
+      "director": "Curated Selection",
+      "shortDesc": "High quality cinematic presentation in dual audio format.",
+      "synopsis": "Presented in crystal clear sound and high-definition video.",
+      "editorialNote": "Selected for remarkable pacing, cinematography, and immersive audio presentation.",
+      "mood": "Thrilling & Dynamic",
+      "accentHue": "#D9A45B",
+      "posterUrl": "https://i.postimg.cc/rF2MZcvf/Poster-427296a0-b679-11f1-a1ff-b5be297eb9da.jpg",
+      "ratingScore": "8.8",
+      "editorialPick": true,
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]",
+      "downloadLink720p": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#720p",
+      "downloadLink1080p": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#1080p",
+      "downloadLink4k": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#4k",
+      "id": "custom-film-1791124710773"
+    },
     {
       "title": "Buddy (2026)",
       "genre": "Action",
