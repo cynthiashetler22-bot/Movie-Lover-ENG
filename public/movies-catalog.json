@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-04T11:25:29.731Z",
+  "lastSyncedAt": "2026-10-04T11:25:38.630Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -69,6 +69,28 @@
     }
   ],
   "movies": [
+    {
+      "title": "Digger (2026)",
+      "genre": "Action",
+      "year": 2026,
+      "duration": "115 min",
+      "director": "Curated Selection",
+      "shortDesc": "High quality cinematic presentation in dual audio format.",
+      "synopsis": "Presented in crystal clear sound and high-definition video.",
+      "editorialNote": "Selected for remarkable pacing, cinematography, and immersive audio presentation.",
+      "mood": "Thrilling & Dynamic",
+      "accentHue": "#D9A45B",
+      "posterUrl": "https://i.postimg.cc/PxntwjzR/MV5BN2E0YTg1M2Yt-OGQy-Yi00NDFk-LTk3Nz-Ut-Ym-Ey-NTZh-YThh-ZDQ0Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg",
+      "ratingScore": "8.8",
+      "editorialPick": true,
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]",
+      "downloadLink720p": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#720p",
+      "downloadLink1080p": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#1080p",
+      "downloadLink4k": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#4k",
+      "id": "custom-film-1791113128969"
+    },
     {
       "title": "Verity (2026)",
       "genre": "Action",
