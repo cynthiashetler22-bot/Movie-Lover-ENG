@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-04T11:21:16.943Z",
+  "lastSyncedAt": "2026-10-04T11:22:23.964Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -69,6 +69,28 @@
     }
   ],
   "movies": [
+    {
+      "title": "Primetime (2026)",
+      "genre": "Action",
+      "year": 2026,
+      "duration": "115 min",
+      "director": "Curated Selection",
+      "shortDesc": "High quality cinematic presentation in dual audio format.",
+      "synopsis": "Presented in crystal clear sound and high-definition video.",
+      "editorialNote": "Selected for remarkable pacing, cinematography, and immersive audio presentation.",
+      "mood": "Thrilling & Dynamic",
+      "accentHue": "#D9A45B",
+      "posterUrl": "https://i.postimg.cc/nr7B1Z6f/PRIMETIME-Teaser-Poster-810x1200.jpg",
+      "ratingScore": "8.8",
+      "editorialPick": true,
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]",
+      "downloadLink720p": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#720p",
+      "downloadLink1080p": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#1080p",
+      "downloadLink4k": "https://www.mediafire.com/file/s91qmpwjbsktxt4/%255BMovieBaaz.com%255D_-_TOXiC_%25282026%2529_Hindi_HDRip_1080p_-_%255BCineBari.com%255D.mkv/file#4k",
+      "id": "custom-film-1791112875937"
+    },
     {
       "title": "Heart of the Beast (2026)",
       "genre": "Action",
