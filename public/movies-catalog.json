@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:24:23.577Z",
+  "lastSyncedAt": "2026-10-08T05:24:49.253Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1449,7 +1449,7 @@
     },
     {
       "id": "col-brave-soul",
-      "title": "The Brave Soul",
+      "title": "Only The Brave Soul",
       "genre": "Documentary",
       "year": 2023,
       "duration": "94 min",
@@ -1459,13 +1459,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Urgent & Inspiring",
       "accentHue": "#63A9A0",
-      "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
+      "posterUrl": "https://i.postimg.cc/D0VDw7wQ/images-(17).jpg",
       "ratingScore": "8.7",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-winter-letters",
