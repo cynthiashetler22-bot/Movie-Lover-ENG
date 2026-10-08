@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:31:36.568Z",
+  "lastSyncedAt": "2026-10-08T05:32:38.832Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1209,7 +1209,7 @@
     },
     {
       "id": "col-taar-porosh",
-      "title": "Taar Porosh",
+      "title": "Taar",
       "genre": "Romance",
       "year": 2023,
       "duration": "118 min",
@@ -1219,13 +1219,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Melodic & Poignant",
       "accentHue": "#63A9A0",
-      "posterUrl": "/assets/poster_cyber_odyssey_1790612776339-CM3Ohrxu.jpg",
+      "posterUrl": "https://i.postimg.cc/rF7J6fzS/tar.jpg",
       "ratingScore": "9.0",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-forgotten-room",
