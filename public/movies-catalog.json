@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T04:21:01.745Z",
+  "lastSyncedAt": "2026-10-08T04:21:28.087Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -69,6 +69,28 @@
     }
   ],
   "movies": [
+    {
+      "title": "Moonlight (Re-release 2026)",
+      "genre": "Action",
+      "year": 2026,
+      "duration": "115 min",
+      "director": "Curated Selection",
+      "shortDesc": "High quality cinematic presentation in dual audio format.",
+      "synopsis": "Presented in crystal clear sound and high-definition video.",
+      "editorialNote": "Selected for remarkable pacing, cinematography, and immersive audio presentation.",
+      "mood": "Thrilling & Dynamic",
+      "accentHue": "#D9A45B",
+      "posterUrl": "https://i.postimg.cc/4350XyR2/Moonlight-anniversary.jpg",
+      "ratingScore": "8.8",
+      "editorialPick": true,
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]",
+      "downloadLink720p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>",
+      "downloadLink1080p": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>",
+      "downloadLink4k": "<script async src=\"https://ds.mrmnd.com/5cb52f51-84a9-4e9e-8932-08f620ee3d07.js\"></script>",
+      "id": "custom-film-1791433260912"
+    },
     {
       "title": "Atonement (Re-release 2026)",
       "genre": "Action",
