@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:30:29.460Z",
+  "lastSyncedAt": "2026-10-08T05:30:54.221Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1272,7 +1272,7 @@
     },
     {
       "id": "col-rainy-hearts",
-      "title": "Rainy Hearts",
+      "title": "Country Hearts",
       "genre": "Romance",
       "year": 2023,
       "duration": "98 min",
@@ -1282,13 +1282,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Intimate",
       "accentHue": "#63A9A0",
-      "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
+      "posterUrl": "https://i.postimg.cc/ZnRcmgrm/images-(19).jpg",
       "ratingScore": "9.3",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-black-veil",
