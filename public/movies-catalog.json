@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:25:35.767Z",
+  "lastSyncedAt": "2026-10-08T05:26:02.780Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1399,13 +1399,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Visionary & Cerebral",
       "accentHue": "#63A9A0",
-      "posterUrl": "/assets/poster_alpine_echo_1790612825975-CBbt9xxq.jpg",
+      "posterUrl": "https://i.postimg.cc/05fdQ8jQ/MV5BODVk-Mz-U3Ym-Et-Zj-Zl-NS00Yj-Vk-LTg1MDUt-Nz-Qx-ZTUy-YWUw-NDc3Xk-Ey-Xk-Fqc-Gc-V1.jpg",
       "ratingScore": "8.4",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-shadow-man",
