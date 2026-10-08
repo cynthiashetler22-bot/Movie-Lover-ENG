@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:33:03.677Z",
+  "lastSyncedAt": "2026-10-08T05:33:36.521Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1199,13 +1199,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Tense & Resolute",
       "accentHue": "#D9A45B",
-      "posterUrl": "/assets/poster_silent_echo_1790612867427-CCl7W6Mr.jpg",
+      "posterUrl": "https://i.postimg.cc/xd3yzY5y/MV5BMzlh-ZWNj-OWQt-Yz-U0OS00M2Fl-LTkz-Nz-It-Mj-Uw-ZTJi-Yj-Jj-ZDlj-Xk-Ey-Xk-Fqc-Gc-V1.jpg",
       "ratingScore": "8.9",
       "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-taar-porosh",
