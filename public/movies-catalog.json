@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:26:02.780Z",
+  "lastSyncedAt": "2026-10-08T05:27:06.608Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1379,13 +1379,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Touching & Quiet",
       "accentHue": "#63A9A0",
-      "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
+      "posterUrl": "https://i.postimg.cc/cL8nQZxL/320226-silent-tears-0-600-0-900-crop.jpg",
       "ratingScore": "9.8",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-city-of-dreams",
