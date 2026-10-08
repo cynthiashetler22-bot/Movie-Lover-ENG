@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:29:48.993Z",
+  "lastSyncedAt": "2026-10-08T05:30:29.460Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1302,13 +1302,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Gothic Noir",
       "accentHue": "#9381FF",
-      "posterUrl": "/assets/poster_neon_tokyo_1790612839510-DT-U3TGt.jpg",
+      "posterUrl": "https://i.postimg.cc/N06bkRs1/91g-FUDz-Pm-DL-UF1000-1000-QL80.jpg",
       "ratingScore": "9.4",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-moments-of-love",
