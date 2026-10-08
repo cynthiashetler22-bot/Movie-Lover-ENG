@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:30:54.221Z",
+  "lastSyncedAt": "2026-10-08T05:31:36.568Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1262,13 +1262,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Sublime",
       "accentHue": "#D9A45B",
-      "posterUrl": "/assets/poster_shadow_veil_1790612811676-BKC_epAD.jpg",
+      "posterUrl": "https://i.postimg.cc/597gg4Vv/MV5BY2Ew-MDg0MDAt-N2Rk-OC00OTE5LWEz-MTkt-Yzg1ZWJj-NWQ5NDQ0Xk-Ey-Xk-Fqc-Gc-V1.jpg",
       "ratingScore": "9.2",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-rainy-hearts",
