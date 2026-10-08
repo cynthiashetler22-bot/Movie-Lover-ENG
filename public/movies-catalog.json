@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-10-08T05:28:03.844Z",
+  "lastSyncedAt": "2026-10-08T05:28:51.351Z",
   "syncedBy": "Streamora Admin Console (1-Click Push)",
   "version": "1.2.0",
   "siteSettings": {
@@ -1229,7 +1229,7 @@
     },
     {
       "id": "col-forgotten-room",
-      "title": "The Forgotten Room",
+      "title": "Hounted Forest",
       "genre": "Drama",
       "year": 2024,
       "duration": "102 min",
@@ -1239,13 +1239,16 @@
       "editorialNote": "Sample editorial discovery entry. Verify availability and rights with site curator.",
       "mood": "Meditative",
       "accentHue": "#63A9A0",
-      "posterUrl": "/assets/poster_royal_heart_1790612795993-TCfCPp3Z.jpg",
+      "posterUrl": "https://i.postimg.cc/G2M2WSL7/hauntedforest.jpg",
       "ratingScore": "9.1",
-      "editorialPick": false,
+      "editorialPick": true,
       "downloadLink720p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
       "downloadLink1080p": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
       "downloadLink4k": "https://direct-league.com/d.mGFdzXdUGJN/vvZ/GoUR/weimg9PukZGUEldk/PLTgce0CN_zQY/w_MNzWM/t/NjzeQ-3sNDj/ArzGNRwr",
-      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-"
+      "downloadLink480p": "https://splendid-garage.com/bu3.VW0NPE3RpkvUb/mCVKJVZjDY0/3fNBDDcU2FMbDjA/5VLbT/cF0tN/z/YtwCM/T/M-",
+      "quality": "1080p FHD",
+      "fileSize": "1.8 GB",
+      "audioTracks": "Dual Audio [Hindi + Eng]"
     },
     {
       "id": "col-beyond-mountains",
